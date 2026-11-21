@@ -90,6 +90,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .tags{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-size:.78rem;color:var(--mist)}
 .tag.acc{color:var(--brass)}
 .tag.own{color:var(--ok)}
+.tag.reg,.tag.gen,.tag.sty{color:var(--soft)}
 .vbtn{display:none;position:absolute;right:0;top:12px;min-height:40px;padding:0 16px;font-size:.84rem}
 .armed .vbtn{display:inline-flex}
 .armed .row{cursor:pointer}
@@ -792,7 +793,11 @@ function meta(x){
  if(x.e===0)return(x.t==="a"?"Anime film, ":"Movie, ")+x.m+" min";
  const n=Math.max(1,Math.min(x.e,Math.floor(st.T/x.m)));
  return(x.t==="a"?"Anime, ":"Series, ")+x.e+" episodes of "+x.m+" min. About "+n+" fit tonight."}
-const tags=x=>(x.g&&x.g.has("le")?`<span class="tag acc">On Esra's list</span>`:"")+(x.g&&x.g.has("ld")?`<span class="tag acc">On David's list</span>`:"")+x.mo.map(m=>`<span class="tag">${ML[m]}</span>`).join("");
+const RG=["es","tr","kr","jp","cn","la","uk","eu","na","asia"],GL=new Set(CG[2][1]),SL=new Set(CG[4][1]);
+const tags=x=>{const g=x.g||new Set(),s=(t,c="")=>`<span class="tag${c}">${t}</span>`,r=RG.find(c=>g.has(c));
+ return (g.has("le")?s("On Esra's list"," acc"):"")+(g.has("ld")?s("On David's list"," acc"):"")+(r?s(CO[r]," reg"):"")+
+ [...g].filter(t=>GL.has(t)&&t!=="anim").slice(0,3).map(t=>s(CO[t]," gen")).join("")+[...g].filter(t=>SL.has(t)).slice(0,2).map(t=>s(CO[t]," sty")).join("")+
+ x.mo.map(m=>s(ML[m])).join("")};
 function renderCards(){
  $("vetos").innerHTML=S.p.map((p,i)=>`<button class="chip vt" data-v="${i}" aria-pressed="${armed===i}" ${vetos[i]?"disabled":""}>${vetos[i]?esc(p)+" used their veto":armed===i?"Pick one to veto":esc(p)+" vetoes"}</button>`).join("");
  $("cards").className="cards"+(armed>=0?" armed":"");
