@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#12162a">
+<title>🍓 Bobos Movie Night</title>
+<style>
+:root{--ink:#12162a;--deep:#1a1f38;--deep2:#222846;--line:#2c3356;--line2:#3a4270;--screen:#f1eadb;--soft:#cfc8bb;--mist:#9aa0bd;--brass:#d8b46a;--brass2:#e9cd92;--velvet:#8c2a42;--velvet2:#a3334f;--ok:#7fbf9c;--bad:#e07a6a;
+--serif:ui-rounded,"SF Pro Rounded","Nunito","Varela Round","Quicksand","Segoe UI Variable Display","Segoe UI",system-ui,sans-serif;--sans:ui-rounded,"SF Pro Rounded","Nunito","Varela Round","Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+*{box-sizing:border-box}
+html{color-scheme:dark;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--screen);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased;min-height:100vh}
+.wrap{max-width:660px;margin:0 auto;padding:22px 20px 72px}
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.brand{font-family:var(--serif);font-size:1.15rem;line-height:1.15;margin:0;font-weight:600}
+.brand span{display:block;font-weight:400;font-style:italic;color:var(--mist);font-size:.9rem}
+.lvl{text-align:right;min-width:150px;font-size:.78rem;color:var(--mist)}
+.lvl b{color:var(--screen);font-weight:600}
+.bar{height:3px;border-radius:3px;background:var(--line);overflow:hidden;margin:6px 0 4px}
+.bar i{display:block;height:100%;background:var(--brass);transition:width .6s}
+
+.hero{padding:44px 0 10px}
+.hero label{display:block;font-family:var(--serif);font-style:italic;color:var(--mist);font-size:1.05rem}
+.time{font-family:var(--serif);font-size:clamp(3.4rem,15vw,5.2rem);line-height:1;margin:6px 0 2px;font-weight:400;letter-spacing:-.02em;font-variant-numeric:lining-nums tabular-nums}
+.time small{font-size:.42em;color:var(--mist);margin:0 .18em 0 .04em;letter-spacing:0}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;margin:0;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:linear-gradient(90deg,var(--brass) var(--p,40%),var(--line2) var(--p,40%))}
+input[type=range]::-moz-range-track{height:2px;background:var(--line2)}
+input[type=range]::-moz-range-progress{height:2px;background:var(--brass)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--brass);border:4px solid var(--ink);box-shadow:0 0 0 1px var(--brass);margin-top:-10px}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--brass);border:4px solid var(--ink);box-shadow:0 0 0 1px var(--brass)}
+.ticks{display:flex;justify-content:space-between;font-size:.72rem;color:var(--mist);margin-top:-6px}
+.sum{font-family:var(--serif);font-size:1.2rem;line-height:1.45;color:var(--soft);margin:22px 0 0;max-width:34em}
+
+.ctl{border-top:1px solid var(--line);margin-top:28px}
+.fld{padding:20px 0;border-bottom:1px solid var(--line)}
+.fh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.fh h2{font-size:.88rem;font-weight:600;margin:0;color:var(--screen)}
+.fh span,.clr{font-size:.8rem;color:var(--mist)}
+.clr{background:none;border:0;font:inherit;font-size:.8rem;cursor:pointer;min-height:32px;padding:0;text-decoration:underline;text-underline-offset:3px}
+.clr:hover{color:var(--screen)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line2);background:transparent;color:var(--soft);font:inherit;font-size:.88rem;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.chip:hover{border-color:var(--mist);color:var(--screen)}
+.chip[aria-pressed=true]{background:var(--brass);border-color:var(--brass);color:var(--ink);font-weight:600}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line2);border-radius:999px;padding:3px}
+.seg .chip{border:0;padding:0 6px}
+.seg .chip[aria-pressed=true]{background:var(--screen);color:var(--ink)}
+.ctabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:-4px 0 14px}
+.ctabs::-webkit-scrollbar{display:none}
+.ctab{background:none;border:0;border-bottom:1px solid transparent;color:var(--mist);font:inherit;font-size:.86rem;padding:0 10px 0 0;margin-right:8px;min-height:40px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center}
+.ctab:hover{color:var(--screen)}
+.ctab[aria-selected=true]{color:var(--screen);border-bottom-color:var(--brass)}
+.ctab i{font-style:normal;font-size:.7rem;font-weight:700;color:var(--brass);margin-left:5px}
+.tg{display:flex;align-items:center;gap:12px;background:none;border:0;color:var(--screen);font:inherit;font-size:.92rem;min-height:44px;cursor:pointer;padding:0}
+.tg span{width:40px;height:24px;border-radius:24px;border:1px solid var(--line2);position:relative;transition:background .2s,border-color .2s;flex:none}
+.tg span::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:var(--mist);transition:left .2s,background .2s}
+.tg[aria-checked=true] span{background:var(--brass);border-color:var(--brass)}
+.tg[aria-checked=true] span::after{left:19px;background:var(--ink)}
+
+.btn{min-height:50px;padding:0 22px;border-radius:999px;border:1px solid transparent;font:inherit;font-weight:600;font-size:.98rem;cursor:pointer;background:var(--velvet);color:var(--screen);transition:background .15s,transform .1s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{background:var(--velvet2)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.sec{background:transparent;color:var(--screen);border-color:var(--line2)}
+.btn.sec:hover{border-color:var(--mist);background:transparent}
+.btn.icon{width:50px;padding:0;flex:none}
+.btn.big{width:100%;min-height:56px;font-size:1.02rem}
+.actions{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:26px}
+.msg{min-height:1.2em;color:var(--mist);font-size:.86rem;margin:12px 0 0}
+
+.stage{background:var(--deep);border:1px solid var(--line);border-radius:22px;padding:24px 20px;margin:28px 0}
+.sth{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.stage h2{font-family:var(--serif);font-weight:400;font-size:1.6rem;margin:0;letter-spacing:-.01em}
+.stage .sub{color:var(--mist);font-size:.86rem;margin:0 0 16px}
+.vetos{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
+.vt{font-size:.84rem}
+.vt[aria-pressed=true]{background:var(--velvet);border-color:var(--velvet);color:var(--screen)}
+.vt:disabled{opacity:.4;cursor:not-allowed}
+.cards{list-style:none;margin:0;padding:0}
+.row{position:relative;display:grid;grid-template-columns:14px 1fr;gap:12px;padding:16px 0;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.sw{width:10px;height:10px;border-radius:50%;margin-top:9px}
+.rt{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding-right:46px}
+.row h3{font-family:var(--serif);font-size:1.22rem;font-weight:600;margin:0;line-height:1.25}
+.yr{color:var(--mist);font-size:.86rem;font-variant-numeric:tabular-nums}
+.meta{color:var(--mist);font-size:.82rem;margin:2px 0 0}
+.ds{margin:6px 0 0;font-size:.92rem;color:var(--soft);line-height:1.5;max-width:36em}
+.tags{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-size:.78rem;color:var(--mist)}
+.tag.acc{color:var(--brass)}
+.tag.own{color:var(--ok)}
+.vbtn{display:none;position:absolute;right:0;top:12px;min-height:40px;padding:0 16px;font-size:.84rem}
+.armed .vbtn{display:inline-flex}
+.armed .row{cursor:pointer}
+.armed .row>div{padding-right:78px}
+.armed .rt{padding-right:0}
+.armed .row:hover h3{text-decoration:line-through;text-decoration-color:var(--bad)}
+.rm{position:absolute;right:0;top:8px;width:44px;height:44px;border:0;background:none;color:var(--mist);cursor:pointer;display:grid;place-items:center;border-radius:50%}
+.rm:hover{color:var(--screen);background:var(--deep2)}
+.armed .rm{display:none}
+.row.out{animation:out .3s forwards}
+@keyframes out{to{opacity:0;transform:translateX(24px)}}
+.addrow{display:flex;gap:8px;margin-top:10px;padding-top:16px;border-top:1px solid var(--line)}
+.txt{flex:1;min-width:0;min-height:50px;border-radius:999px;border:1px solid var(--line2);background:var(--ink);color:var(--screen);padding:0 18px;font:inherit;font-size:.92rem}
+.txt::placeholder{color:var(--mist)}
+.txt:focus{outline:0;border-color:var(--brass)}
+
+.wheelbox{position:relative;width:min(330px,80vw);aspect-ratio:1;margin:6px auto 22px}
+.wheelbox canvas{width:100%;height:100%;display:block}
+.ptr{position:absolute;left:50%;top:-10px;transform:translateX(-50%);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:24px solid var(--brass);z-index:2;filter:drop-shadow(0 3px 3px #0009)}
+.win{text-align:center;animation:rise .5s cubic-bezier(.2,.9,.3,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+.win .lead{font-family:var(--serif);font-style:italic;color:var(--brass);font-size:1.05rem;margin:0}
+.win h3{font-family:var(--serif);font-size:clamp(1.9rem,8vw,2.6rem);font-weight:600;letter-spacing:-.015em;margin:4px 0 6px;line-height:1.1}
+.win .ds{max-width:30em;margin:12px auto 0}
+.win .tags{justify-content:center}
+.win .actions{grid-template-columns:1fr 1fr}
+.coin{width:54px;height:54px;margin:22px auto 8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--brass2),var(--brass) 55%,#a5843f);display:grid;place-items:center;font-family:var(--serif);font-weight:700;color:var(--ink)}
+.coin.flip{animation:flip 1.2s cubic-bezier(.3,.7,.3,1)}
+@keyframes flip{to{transform:rotateY(1800deg)}}
+#cr{color:var(--mist);font-size:.9rem;margin:0}
+#cr b{color:var(--screen)}
+
+.more{margin-top:36px;border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-family:var(--serif);font-size:1.12rem;min-height:58px;display:flex;align-items:center;justify-content:space-between;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--sans);font-size:1.3rem;color:var(--mist);font-weight:300;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+.cnt{color:var(--mist);font-family:var(--sans);font-size:.8rem;margin-left:10px;font-variant-numeric:tabular-nums}
+.hist{list-style:none;margin:0;padding:0 0 14px}
+.hist li{display:flex;align-items:center;gap:6px;padding:8px 0}
+.hist li span{flex:1;min-width:0}
+.hist b{font-family:var(--serif);font-weight:600;font-size:1rem}
+.hist small{color:var(--mist);display:block;font-size:.76rem}
+.ib{width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:transparent;color:var(--mist);cursor:pointer;display:grid;place-items:center;flex:none}
+.ib:hover{color:var(--screen)}
+.ib[aria-pressed=true]{color:var(--ink);border-color:var(--ok);background:var(--ok)}
+.ib.dn[aria-pressed=true]{border-color:var(--bad);background:var(--bad)}
+.ach{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px 20px;padding-bottom:18px}
+.ach div{padding:8px 0;font-size:.8rem;color:var(--mist);border-top:1px solid var(--line)}
+.ach b{display:block;font-family:var(--serif);font-size:.98rem;font-weight:600;color:var(--mist)}
+.ach div.on b{color:var(--brass)}
+.ach div.on b::after{content:" ✓";font-family:var(--sans);font-size:.8rem}
+.names{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-bottom:20px}
+.names label{font-size:.8rem;color:var(--mist);display:grid;gap:6px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,170%);background:var(--screen);color:var(--ink);font-size:.9rem;padding:12px 20px;border-radius:999px;box-shadow:0 12px 32px #000a;transition:transform .35s cubic-bezier(.2,1,.3,1);z-index:9;max-width:calc(100% - 32px);text-align:center}
+.toast.show{transform:translate(-50%,0)}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:8}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.hide{display:none!important}
+.foot{color:var(--mist);font-size:.78rem;margin-top:28px;font-family:var(--serif);font-style:italic}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+@media (max-width:420px){.lvl{min-width:120px}.stage{padding:20px 16px;margin-left:-4px;margin-right:-4px}}
+body{background:#0d1022}
+.wrap{position:relative}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(120% 80% at 10% -10%,#3a1a3a 0,transparent 55%),radial-gradient(90% 70% at 110% 10%,#1d2f5c 0,transparent 60%),radial-gradient(80% 60% at 50% 120%,#3b2a14 0,transparent 60%),#0d1022}
+.bg i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:drift 22s ease-in-out infinite alternate}
+.bg i:nth-child(1){width:46vmax;height:46vmax;left:-14vmax;top:-12vmax;background:#8c2a42}
+.bg i:nth-child(2){width:38vmax;height:38vmax;right:-12vmax;top:32vh;background:#3d5a80;animation-duration:28s}
+.bg i:nth-child(3){width:34vmax;height:34vmax;left:18vw;bottom:-18vmax;background:#b98a3e;opacity:.3;animation-duration:34s}
+@keyframes drift{to{transform:translate(7vmax,6vmax) scale(1.15)}}
+.ctl,.stage,.more{position:relative;background:linear-gradient(140deg,rgba(255,255,255,.11),rgba(255,255,255,.03) 45%,rgba(255,255,255,.07));-webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%);border:1px solid rgba(255,255,255,.13);border-radius:26px;box-shadow:inset 0 1px 0 rgba(255,255,255,.24),inset 0 -1px 0 rgba(0,0,0,.25),0 24px 60px -14px rgba(0,0,0,.6)}
+.ctl::before,.stage::before,.more::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(110% 55% at 12% 0%,rgba(255,255,255,.13),transparent 55%)}
+.ctl>*,.stage>*,.more>*{position:relative;z-index:1}
+.ctl{padding:2px 20px 6px;margin-top:28px}
+.ctl .fld:last-child,.more details:last-child{border-bottom:0}
+.fld,details{border-bottom-color:rgba(255,255,255,.08)}
+.more{padding:0 20px;margin-top:32px}
+.row{border-top-color:rgba(255,255,255,.08)}
+.addrow{border-top-color:rgba(255,255,255,.08)}
+.time{background:linear-gradient(180deg,#fffaf0 15%,#e9cd92 70%,#c4566b 140%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 8px 28px rgba(216,180,106,.28));transform-origin:left center;display:inline-block}
+.time small{-webkit-text-fill-color:rgba(241,234,219,.5)}
+.time.bump{animation:bump .22s ease-out}
+@keyframes bump{40%{transform:scale(1.035)}}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(90deg,#c4566b,#d8b46a var(--p,40%),rgba(255,255,255,.14) var(--p,40%))}
+input[type=range]::-moz-range-track{height:4px;border-radius:4px;background:rgba(255,255,255,.14)}
+input[type=range]::-moz-range-progress{height:4px;border-radius:4px;background:linear-gradient(90deg,#c4566b,#d8b46a)}
+input[type=range]::-webkit-slider-thumb{width:28px;height:28px;margin-top:-12px;border:0;background:radial-gradient(circle at 35% 30%,#fff6dc,#e9cd92 40%,#b98d3e);box-shadow:0 0 0 7px rgba(216,180,106,.16),0 6px 16px rgba(216,180,106,.55);transition:transform .15s}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border:0;background:radial-gradient(circle at 35% 30%,#fff6dc,#e9cd92 40%,#b98d3e);box-shadow:0 0 0 7px rgba(216,180,106,.16),0 6px 16px rgba(216,180,106,.55)}
+.bar{background:rgba(255,255,255,.12)}
+.bar i{background:linear-gradient(90deg,#c4566b,#e9cd92)}
+.chip{background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.02));border-color:rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.12);transition:transform .2s cubic-bezier(.3,1.6,.5,1),background .2s,box-shadow .2s,color .2s,border-color .2s}
+.chip:hover{border-color:rgba(255,255,255,.3)}
+.chip:active{transform:scale(.93)}
+.chip[aria-pressed=true]{background:linear-gradient(180deg,#f6dea5,#d2a24c);border-color:#f6dea5;color:#1c1608;box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 8px 20px -6px rgba(216,180,106,.7)}
+.chip.pop{animation:pop .4s cubic-bezier(.3,1.8,.5,1)}
+@keyframes pop{0%{transform:scale(.88)}55%{transform:scale(1.09)}100%{transform:scale(1)}}
+.seg{background:rgba(0,0,0,.28);border-color:rgba(255,255,255,.1);box-shadow:inset 0 2px 8px rgba(0,0,0,.4)}
+.seg .chip{background:transparent;box-shadow:none}
+.seg .chip[aria-pressed=true]{background:linear-gradient(180deg,#fffaf0,#e3d8c2);color:#12162a;border-color:transparent;box-shadow:inset 0 1px 0 #fff,0 6px 16px -6px rgba(241,234,219,.6)}
+.vt[aria-pressed=true]{background:linear-gradient(180deg,#c84a69,#7a2338);border-color:#d0607b;color:#fff;box-shadow:0 8px 20px -6px rgba(196,86,107,.7)}
+.ctab[aria-selected=true]{border-bottom:2px solid transparent;border-image:linear-gradient(90deg,#c4566b,#e9cd92) 1}
+.tg span{background:rgba(0,0,0,.3);border-color:rgba(255,255,255,.16)}
+.tg[aria-checked=true] span{background:linear-gradient(180deg,#f6dea5,#d2a24c);box-shadow:0 6px 16px -6px rgba(216,180,106,.8)}
+.btn{position:relative;overflow:hidden;background:linear-gradient(180deg,#c24966 0%,#8c2a42 58%,#701d34 100%);border-color:rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.25),0 12px 30px -10px rgba(196,86,107,.85);transition:transform .18s cubic-bezier(.3,1.6,.5,1),box-shadow .2s,filter .2s}
+.btn::after{content:"";position:absolute;left:0;right:0;top:0;height:50%;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.22),transparent);pointer-events:none}
+.btn:hover{background:linear-gradient(180deg,#c24966 0%,#8c2a42 58%,#701d34 100%);filter:brightness(1.1)}
+.btn:active{transform:scale(.96)}
+.btn.sec{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.03));border-color:rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 8px 20px -12px rgba(0,0,0,.6);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.btn.sec:hover{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.05));border-color:rgba(255,255,255,.26)}
+.btn.sec::after{display:none}
+.btn.vbtn{position:absolute}
+#spinB,#yes{background:linear-gradient(180deg,#f8e2ad,#d8b46a 55%,#b38737);color:#1c1608;box-shadow:inset 0 1px 0 rgba(255,255,255,.75),inset 0 -2px 0 rgba(0,0,0,.18),0 14px 34px -10px rgba(216,180,106,.9)}
+#spinB:not(:disabled){animation:breathe 2.8s ease-in-out infinite}
+@keyframes breathe{50%{box-shadow:inset 0 1px 0 rgba(255,255,255,.75),inset 0 -2px 0 rgba(0,0,0,.18),0 16px 48px -6px rgba(216,180,106,1)}}
+.txt{background:rgba(0,0,0,.28);border-color:rgba(255,255,255,.14);transition:border-color .2s,box-shadow .2s}
+.txt:focus{border-color:#e9cd92;box-shadow:0 0 0 4px rgba(216,180,106,.18)}
+.wheelbox{isolation:isolate}
+.wheelbox::before{content:"";position:absolute;inset:-16%;border-radius:50%;background:radial-gradient(circle,rgba(216,180,106,.4),rgba(196,86,107,.2) 42%,transparent 68%);filter:blur(12px);z-index:-1;opacity:.55;transition:opacity .5s,transform .5s}
+.wheelbox.spinning::before{opacity:1;transform:scale(1.08)}
+.wheelbox::after{content:"";position:absolute;inset:3%;border-radius:50%;background:radial-gradient(120% 85% at 28% 12%,rgba(255,255,255,.3),rgba(255,255,255,.06) 40%,transparent 55%);pointer-events:none}
+.win h3{line-height:1.2;padding-bottom:.1em;background:linear-gradient(180deg,#fffaf0 20%,#e9cd92 110%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.coin{box-shadow:0 0 0 6px rgba(216,180,106,.15),0 10px 26px rgba(216,180,106,.5)}
+.toast{background:rgba(241,234,219,.85);-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);box-shadow:inset 0 1px 0 #fff,0 14px 36px -8px rgba(0,0,0,.7)}
+.ib[aria-pressed=true]{box-shadow:0 6px 16px -6px currentColor}
+.hero label,.win .lead,.foot{font-style:normal}
+.cform{display:grid;gap:14px;padding:4px 0 18px}
+.cform .fh{margin:2px 0 -4px}
+.seg.s3{grid-template-columns:repeat(3,1fr)}
+.seg.s2{grid-template-columns:repeat(2,1fr)}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.cgrid label{display:grid;gap:6px;font-size:.8rem;color:var(--mist)}
+.cgrid small{font-size:.72rem;opacity:.8}
+.cgrid .txt{min-height:46px;border-radius:14px}
+input[type=number]{-moz-appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.cx{display:block;margin:0 0 16px}
+#ibL li{border-top:1px solid rgba(255,255,255,.08)}
+.note{margin:0;font-size:.84rem;color:var(--mist)}
+.note.err{color:#f0a49a;min-height:0}
+.note.err:empty{display:none}
+.fl{display:grid;gap:6px;font-size:.8rem;color:var(--mist)}
+.area{min-height:150px;padding:14px 16px;border-radius:18px;resize:vertical;line-height:1.5;font:inherit;font-size:.92rem}
+.hist .q b{color:var(--mist)}
+.row h3,.win h3,.stage h2,summary,.hist b,.ach b{font-weight:700;letter-spacing:-.01em}
+.hd{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px 18px;padding:18px 20px;border-radius:30px;overflow:hidden;background:linear-gradient(130deg,rgba(255,120,150,.28),rgba(140,42,66,.2) 42%,rgba(61,90,128,.22));border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%);box-shadow:inset 0 1px 0 rgba(255,255,255,.32),0 26px 60px -18px rgba(224,64,95,.6)}
+.hd::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(90% 120% at 0% 0%,rgba(255,255,255,.18),transparent 45%),radial-gradient(60% 90% at 100% 100%,rgba(240,207,138,.18),transparent 60%)}
+.hd>*{position:relative}
+.berry{width:66px;height:66px;border-radius:22px;display:grid;place-items:center;font-size:2.3rem;line-height:1;background:radial-gradient(circle at 35% 28%,#ffb3c4,#e8486a 55%,#a3203e);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 6px rgba(0,0,0,.2),0 12px 28px -6px rgba(232,72,106,.85);animation:berry 3.4s ease-in-out infinite}
+@keyframes berry{50%{transform:translateY(-3px) rotate(-7deg)}}
+.hd .brand{font-family:var(--sans);font-size:clamp(1.55rem,6.4vw,2.35rem);font-weight:800;letter-spacing:-.025em;line-height:1.2;padding:.04em 0 .12em;margin:0;background:linear-gradient(95deg,#ffc2d1,#fffaf0 48%,#f0cf8a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ttl p{margin:5px 0 0;color:rgba(241,234,219,.78);font-size:.9rem}
+.hd .lvl{display:flex;align-items:center;gap:10px;min-width:0;text-align:left;color:rgba(241,234,219,.75)}
+.ringw{position:relative;width:48px;height:48px;flex:none}
+.ring{width:48px;height:48px;transform:rotate(-90deg)}
+.ring circle{fill:rgba(0,0,0,.22);stroke:rgba(255,255,255,.16);stroke-width:4}
+.ring #lvR{fill:none;stroke:#f0cf8a;stroke-linecap:round;stroke-dasharray:125.7;stroke-dashoffset:125.7;transition:stroke-dashoffset .8s cubic-bezier(.3,1,.4,1);filter:drop-shadow(0 0 4px rgba(240,207,138,.7))}
+#lvL{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:1.05rem;color:#fffaf0}
+.lvt b{display:block;color:#fffaf0;font-size:.86rem;font-weight:700}
+.lvt span{font-size:.76rem}
+.hero{padding-top:34px}
+@media (max-width:540px){.hd{grid-template-columns:auto 1fr;padding:16px}.hd .lvl{grid-column:1/-1;padding-top:12px;border-top:1px solid rgba(255,255,255,.12)}.berry{width:56px;height:56px;font-size:2rem;border-radius:18px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i></div>
+<canvas id="fx"></canvas>
+<div class="wrap">
+<header class="hd">
+  <div class="berry" aria-hidden="true">🍓</div>
+  <div class="ttl"><h1 class="brand">Bobos Movie Night</h1></div>
+  <div class="lvl" aria-live="polite"><div class="ringw"><svg class="ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20"/><circle id="lvR" cx="24" cy="24" r="20"/></svg><span id="lvL">1</span></div><div class="lvt"><b id="lvN"></b><span id="lvS"></span></div></div>
+</header>
+
+<section class="hero">
+  <label for="tm">How long have we got tonight?</label>
+  <div class="time" id="tmv" aria-hidden="true"></div>
+  <input type="range" id="tm" min="30" max="240" step="15" value="120" aria-describedby="sum">
+  <div class="ticks" aria-hidden="true"><span>30 min</span><span>4 hours</span></div>
+  <p class="sum" id="sum" aria-live="polite"></p>
+</section>
+
+<div class="ctl">
+  <div class="fld"><div class="fh"><h2>Format</h2></div><div class="seg" id="ty"></div></div>
+  <div class="fld"><div class="fh"><h2>Mood</h2><span>Pick any</span></div><div class="chips" id="mo"></div></div>
+  <div class="fld"><div class="fh"><h2>Collections</h2><button class="clr" id="coClr">Clear all</button></div><div id="co"></div></div>
+  <div class="fld"><button class="tg" id="wl" role="switch" aria-checked="false"><span></span>Only titles from our watchlist</button></div>
+</div>
+<div class="actions"><button class="btn big" id="go">Suggest five titles</button><button class="btn sec icon" id="chaos" title="Surprise us" aria-label="Surprise us with random filters"><svg class="i" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg></button></div>
+<p class="msg" id="msg" aria-live="polite"></p>
+
+<section class="stage hide" id="cand">
+  <div class="sth"><h2>The contenders</h2><button class="btn sec icon" id="reroll" title="Suggest five different titles" aria-label="Suggest five different titles"><svg class="i" viewBox="0 0 24 24"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button></div>
+  <p class="sub">Each of you can veto one before the wheel decides.</p>
+  <div class="vetos" id="vetos"></div>
+  <ul class="cards" id="cards"></ul>
+  <form class="addrow" id="addF" autocomplete="off"><input class="txt" id="addI" maxlength="60" placeholder="Add a title of your own" aria-label="Add a title of your own"><button class="btn sec" type="submit">Add</button></form>
+  <div class="actions" style="grid-template-columns:1fr"><button class="btn big" id="spinB">Spin the wheel</button></div>
+</section>
+
+<section class="stage hide" id="wheelS">
+  <div class="wheelbox"><div class="ptr"></div><canvas id="wh" width="680" height="680" aria-label="Wheel"></canvas></div>
+  <div id="res" aria-live="polite"></div>
+</section>
+
+<div class="more">
+<details id="inbox"><summary><span>Add titles<span class="cnt" id="qC"></span></span></summary>
+<div class="cform" id="ibSetup">
+  <p class="note">Connect this phone to your shared Google Sheet once. The steps are in google/SETUP.md.</p>
+  <label class="fl">Inbox URL<input class="txt" id="ibU" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://script.google.com/macros/s/…/exec"></label>
+  <label class="fl">Passcode<input class="txt" id="ibK" type="password" autocomplete="off"></label>
+  <button class="btn big" id="ibSave" type="button">Connect</button>
+  <p class="note err" id="ibE" aria-live="polite"></p>
+</div>
+<div class="cform hide" id="ibMain">
+  <textarea class="txt area" id="ibT" rows="6" aria-label="Titles to add" placeholder="Paste titles, one per line. Lists copied from Letterboxd, notes or WhatsApp work too."></textarea>
+  <p class="note" id="ibN" aria-live="polite"></p>
+  <div class="seg s2" id="ibO"></div>
+  <button class="btn big" id="ibSend" type="button">Send to the inbox</button>
+  <p class="note err" id="ibM" aria-live="polite"></p>
+  <ul class="hist" id="ibL"></ul>
+  <button class="clr cx" id="ibRe" type="button">Change connection</button>
+</div>
+</details>
+<details><summary><span>What we've watched<span class="cnt" id="hC"></span></span></summary><ul class="hist" id="hist"></ul></details>
+<details><summary><span>Achievements<span class="cnt" id="achC"></span></span></summary><div class="ach" id="ach"></div></details></div>
+<p class="foot">Works offline. Progress is saved on this device.</p>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const D=[
+["Ran",1985,"p",162,0,"epic,cry",1,"jp,osc","Kurosawa's King Lear: an ageing warlord splits his realm among three sons and chaos follows."],
+["Akira",1988,"a",124,0,"rush,weird,epic",1,"jp,cult,sci","Biker gangs, psychic powers and a city on the brink in post-apocalyptic Neo-Tokyo."],
+["Mother",2009,"p",129,0,"tense,brain,cry",1,"kr,crime,mys","Bong Joon-ho: a fierce mother hunts the real killer after her son is accused of murder."],
+["GoodFellas",1990,"p",146,0,"tense,rush",1,"osc,crime,true","Henry Hill's rise and fall in the mob, told at Scorsese's breakneck pace."],
+["Rush Hour",1998,"p",98,0,"fun,rush",1,"blk,date","A Hong Kong cop and a motormouth LAPD detective team up to rescue a kidnapped girl."],
+["Fury",2014,"p",134,0,"rush,epic,tense",1,"blk","A Sherman tank crew pushes deep into Nazi Germany in the war's final days."],
+["It Ends",2025,"p",90,0,"weird,tense",1,"ind","Four friends on a late-night drive find themselves trapped on a road that never ends."],
+["Harakiri",1962,"p",133,0,"tense,cry,epic",1,"jp,fest","A ronin asks to commit ritual suicide at a lord's estate, and exposes the clan's cruelty."],
+["Seven Samurai",1954,"p",207,0,"epic,rush",1,"jp,fest","A poor village hires seven masterless samurai to defend it from bandits."],
+["Ikiru",1952,"p",143,0,"cry,brain",1,"jp","A dying bureaucrat searches for meaning in his final months."],
+["In the Mood for Love",2000,"p",98,0,"love,cry",1,"cn,fest,date","Two neighbours in 1960s Hong Kong grow close after discovering their spouses' affair."],
+["Chungking Express",1994,"p",102,0,"love,cozy,weird",1,"cn,cult,date","Two lovesick Hong Kong cops, a snack bar and a lot of 'California Dreamin''."],
+["Wake Up Dead Man",2025,"p",144,0,"brain,fun",1,"mys","Benoit Blanc tackles an impossible murder in a small-town church."],
+["Avatar: Fire and Ash",2025,"p",197,0,"epic,rush",1,"blk,sci","The Sully family faces the Ash People, a fiery and hostile Na'vi clan."],
+["One Battle After Another",2025,"p",162,0,"rush,fun,tense",1,"osc","A washed-up revolutionary must save his daughter when an old enemy resurfaces."],
+["Frankenstein",2025,"p",149,0,"scary,cry,epic",1,"","Guillermo del Toro's gothic take on the scientist and the creature he abandons."],
+["Taxi Driver",1976,"p",114,0,"tense,weird",1,"fest,crime,cult","A lonely, insomniac New York cabbie spirals toward violence."],
+["Come and See",1985,"p",142,0,"cry,tense",1,"eu,fest","A Belarusian boy joins the partisans and witnesses the horrors of WWII."],
+["There Will Be Blood",2007,"p",158,0,"tense,brain",1,"osc","A ruthless oilman's greed collides with a young preacher in early-1900s California."],
+["Trainspotting",1996,"p",94,0,"fun,rush,weird",1,"eu,cult","Edinburgh heroin addicts, pitch-black jokes and a killer soundtrack."],
+["Apocalypse Now",1979,"p",147,0,"epic,weird,tense",1,"osc,fest","A captain travels upriver into Cambodia to 'terminate' a rogue colonel."],
+["The Lighthouse",2019,"p",109,0,"weird,scary,tense",1,"a24,ind","Two lighthouse keepers slowly lose their minds on a stormy New England rock."],
+["12 Angry Men",1957,"p",96,0,"brain,tense",1,"fest,crime","One juror holds out against eleven in a sweltering deliberation room."],
+["Yi Yi",2000,"p",173,0,"cry,cozy",1,"cn,fest,slow","A year in the life of a Taipei family, from a wedding to a funeral."],
+["Possession",1981,"p",124,0,"weird,scary",1,"eu,cult,fest","A Berlin couple's breakup turns into something monstrous. Unhinged and unforgettable."],
+["A Brighter Summer Day",1991,"p",237,0,"cry,epic",1,"cn,slow","A teenage boy, street gangs and first love in 1960s Taipei."],
+["Hamnet",2025,"p",125,0,"cry,love",1,"osc,eu","Agnes and William Shakespeare face the loss of their son, the seed of Hamlet."],
+["Still Walking",2008,"p",115,0,"cozy,cry",1,"jp,slow","A family gathers on a summer day to remember the son they lost."],
+["Three Colours: Red",1994,"p",99,0,"love,brain",1,"eu","A Geneva model befriends a retired judge who eavesdrops on his neighbours."],
+["Cure",1997,"p",111,0,"scary,tense,brain",1,"jp,crime,cult","A detective hunts a strange drifter linked to a wave of hypnotic murders."],
+["The Elephant Man",1980,"p",124,0,"cry",1,"eu,true","The true story of Joseph Merrick, a disfigured man in Victorian London."],
+["Vertigo",1958,"p",128,0,"tense,love,brain",1,"mys","Hitchcock: an acrophobic detective becomes obsessed with a mysterious woman."],
+["All About Lily Chou-Chou",2001,"p",146,0,"cry,weird",1,"jp,cult","Bullied teens find refuge in an online forum devoted to an ethereal pop singer."],
+["High and Low",1963,"p",143,0,"tense,brain",1,"jp,crime","A rich executive must decide whether to pay the ransom for his chauffeur's kidnapped son."],
+["Millennium Mambo",2001,"p",105,0,"weird,love",1,"cn,slow,gem","A young woman drifts through Taipei's neon nightlife and a toxic relationship."],
+["Suzhou River",2000,"p",83,0,"love,weird",1,"cn,fest,gem","A Shanghai videographer narrates a dreamy, Vertigo-like tale of lost love."],
+["Good Boy",2025,"p",73,0,"scary",1,"ind","A haunted-house horror told entirely from a loyal dog's point of view."],
+["Small, Slow But Steady",2022,"p",99,0,"cozy,cry",1,"jp,slow,gem","A deaf boxer keeps training as her old Tokyo gym faces closure."],
+["Winter Sleep",2014,"p",196,0,"brain",1,"tr,fest,slow","A retired actor running a hotel in Cappadocia clashes with his wife and sister over one long winter."],
+["Undertone",2025,"p",94,0,"scary,tense",1,"ind","A paranormal podcast host caring for her dying mother receives chilling recordings."],
+["Tuner",2025,"p",107,0,"tense,brain",1,"ind,gem","A piano tuner's super-sensitive hearing pulls him into the world of safecracking."],
+["The Wailing",2016,"p",156,0,"scary,tense",1,"kr,mys","A stranger arrives in a Korean village and people start dying in gruesome ways."],
+["The Wave",2008,"p",107,0,"tense,brain",1,"eu","A German teacher's classroom experiment in autocracy spirals out of control."],
+["Digger",2026,"p",140,0,"rush,fun,weird",1,"blk","Iñárritu's dark comedy: a powerful man races to prove he's humanity's saviour after causing a disaster."],
+["Resident Evil",2026,"p",105,0,"scary,rush",1,"blk","Zach Cregger reboots the survival-horror saga: one terrible night in Raccoon City."],
+["Clue",1985,"p",94,0,"fun,brain",1,"mys,cult,date","Six guests, one mansion, a dead host and three different endings."],
+["Sympathy for Mr. Vengeance",2002,"p",129,0,"tense,cry",1,"kr,crime","A deaf man's kidnapping plan to pay for his sister's surgery goes horribly wrong."],
+["The Empty Man",2020,"p",137,0,"scary,weird",1,"cult,gem","An ex-cop searching for a missing girl uncovers a cult and a deadly urban legend."],
+["A Cure for Wellness",2016,"p",146,0,"scary,weird",1,"","A young executive sent to retrieve his CEO from a Swiss spa realises nobody ever leaves."],
+["The Perfection",2018,"p",90,0,"tense,weird",1,"","Two cello prodigies meet and a twisty revenge story unfolds."],
+["Companion",2025,"p",97,0,"tense,fun",1,"sci","A couples' weekend at a remote lake house goes very, very wrong."],
+["(500) Days of Summer",2009,"p",95,0,"love,fun",1,"ind,date","A greeting-card writer replays his doomed romance, out of order."],
+["No Reservations",2007,"p",104,0,"love,cozy",1,"date","A perfectionist chef suddenly raising her niece clashes with her carefree new sous-chef."],
+["13 Going on 30",2004,"p",98,0,"fun,love,cozy",1,"date","A teenager makes a wish and wakes up as her 30-year-old self in New York."],
+["A Quiet Place",2018,"p",90,0,"tense,scary",1,"blk","A family survives in total silence from creatures that hunt by sound."],
+["The Strangers: Chapter 1",2024,"p",91,0,"scary",1,"","A couple stranded in a rural Oregon cabin is terrorised by three masked strangers."],
+["Subservience",2024,"p",106,0,"tense",1,"sci","A family's new android helper becomes dangerously devoted."],
+["Strange Darling",2023,"p",97,0,"tense,weird",1,"ind,gem","A one-night stand turns into a serial-killer chase, told in six chapters out of order."],
+["The Handmaiden",2016,"p",145,0,"love,tense,brain",0,"kr,crime","A con man and a pickpocket maid plot to swindle a Japanese heiress in 1930s Korea."],
+["Decision to Leave",2022,"p",138,0,"love,brain",0,"kr,fest,mys","A detective falls for the widow suspected of her husband's death."],
+["Thirst",2009,"p",133,0,"scary,love,weird",0,"kr,fest","A priest turns into a vampire after a medical experiment and falls for his friend's wife."],
+["Joint Security Area",2000,"p",110,0,"tense,cry",0,"kr,mys","An investigation into a shooting on the border between North and South Korea."],
+["The Host",2006,"p",120,0,"scary,fun,rush",0,"kr,blk","A river monster snatches a girl and her dysfunctional family sets out to save her."],
+["Mickey 17",2025,"p",137,0,"fun,weird",0,"blk,sci","An 'expendable' clone worker on an ice-planet colony keeps dying, and being reprinted."],
+["I Saw the Devil",2010,"p",144,0,"tense,rush",0,"kr,crime","A secret agent plays a brutal cat-and-mouse game with his fiancée's killer."],
+["The Chaser",2008,"p",125,0,"tense",0,"kr,crime","An ex-cop turned pimp races to find a missing woman and the killer who took her."],
+["A Bittersweet Life",2005,"p",120,0,"rush,tense",0,"kr,crime","A mob enforcer's single act of mercy sets off a bloody war."],
+["Burning",2018,"p",148,0,"brain,tense",0,"kr,fest,mys,slow","A young writer suspects a charming rich man of a sinister secret hobby."],
+["Exhuma",2024,"p",134,0,"scary,tense",0,"kr","Shamans and a geomancer exhume a cursed grave for a wealthy family."],
+["The Man from Nowhere",2010,"p",119,0,"rush",0,"kr,crime","A quiet pawnshop owner tears through gangsters to save a little girl."],
+["Past Lives",2023,"p",106,0,"love,cry",0,"a24,kr,ind,date","Two childhood sweethearts reunite in New York decades later."],
+["Happy Together",1997,"p",96,0,"love,cry",0,"cn,fest","A volatile Hong Kong couple tries to start over in Buenos Aires."],
+["2046",2004,"p",129,0,"love,weird",0,"cn","A writer's lost loves blur with his sci-fi story about a train to the year 2046."],
+["Days of Being Wild",1990,"p",94,0,"love",0,"cn","A Hong Kong playboy drifts between lovers while searching for his real mother."],
+["Shoplifters",2018,"p",121,0,"cry,cozy",0,"jp,fest","A makeshift family of petty thieves takes in a neglected little girl."],
+["After Life",1998,"p",118,0,"cozy,cry",0,"jp,gem","The newly dead must choose one memory to keep for eternity."],
+["Our Little Sister",2015,"p",128,0,"cozy",0,"jp,slow","Three sisters in seaside Kamakura welcome their teenage half-sister."],
+["Late Spring",1949,"p",108,0,"cry,cozy",0,"jp,slow","A devoted daughter is pressured to marry and leave her widowed father."],
+["Yojimbo",1961,"p",110,0,"rush,fun",0,"jp,fest","A cunning ronin plays two warring gangs against each other."],
+["Throne of Blood",1957,"p",110,0,"tense,epic",0,"jp","Kurosawa moves Macbeth to feudal Japan: fog, prophecy and a storm of arrows."],
+["Drive My Car",2021,"p",179,0,"brain,cry",0,"jp,osc,fest,slow","A grieving actor-director bonds with his quiet young chauffeur."],
+["Pulse",2001,"p",119,0,"scary,weird",0,"jp,cult,fest","Ghosts seep into Tokyo through the internet, and loneliness spreads."],
+["Perfect Days",2023,"p",124,0,"cozy,cry",0,"jp,fest,slow","A Tokyo toilet cleaner finds joy in routine, cassette tapes and trees."],
+["One Cut of the Dead",2017,"p",96,0,"fun,scary",0,"jp,ind,cult,gem","A low-budget zombie shoot goes off the rails — then the film flips on its head."],
+["Arrival",2016,"p",116,0,"brain,cry,weird",0,"osc,sci","A linguist races to communicate with mysterious alien visitors."],
+["Sicario",2015,"p",121,0,"tense,rush",0,"crime","An idealistic FBI agent is drawn into a murky war against a cartel."],
+["Incendies",2010,"p",131,0,"cry,tense",0,"mys","Twins travel to the Middle East to uncover their late mother's hidden past."],
+["The Game",1997,"p",129,0,"tense,brain",0,"mys","A banker's birthday present, a mysterious 'game', takes over his whole life."],
+["Oppenheimer",2023,"p",180,0,"epic,brain",0,"osc,blk,true","The physicist behind the atomic bomb, and the price of building it."],
+["Tenet",2020,"p",150,0,"rush,brain",0,"osc,blk,sci","A secret agent manipulates the flow of time to prevent World War III."],
+["The Favourite",2018,"p",119,0,"fun,weird",0,"osc,fest,eu,true","Two cousins scheme for the favour of an ailing Queen Anne."],
+["The Lobster",2015,"p",119,0,"weird,fun,love",0,"a24,fest,eu","Singles must find a partner in 45 days or be turned into an animal."],
+["The Northman",2022,"p",137,0,"epic,rush",0,"","A Viking prince's brutal quest to avenge his murdered father."],
+["Nosferatu",2024,"p",132,0,"scary",0,"","Robert Eggers' gothic tale of a vampire obsessed with a young woman."],
+["The Shining",1980,"p",146,0,"scary,tense",0,"cult","A writer's winter as caretaker of an isolated hotel turns murderous."],
+["Rosemary's Baby",1968,"p",137,0,"scary",0,"osc,cult","A young wife suspects her neighbours have sinister plans for her baby."],
+["The Thing",1982,"p",109,0,"scary,tense",0,"cult,sci","An Antarctic research team is infiltrated by a shape-shifting alien."],
+["Talk to Me",2022,"p",95,0,"scary",0,"a24,ind","Teens get hooked on summoning spirits with an embalmed hand."],
+["Pearl",2022,"p",102,0,"scary,weird",0,"a24,ind","A farm girl's dreams of stardom curdle into murder in 1918 Texas."],
+["X",2022,"p",105,0,"scary",0,"a24,ind","A film crew shooting on a remote Texas farm meets their very creepy elderly hosts."],
+["Under the Skin",2013,"p",108,0,"weird",0,"a24,eu,sci,slow","An alien in human form prowls Scotland, luring men into darkness."],
+["Annihilation",2018,"p",115,0,"weird,brain,scary",0,"sci","A biologist enters 'the Shimmer', a zone where nature mutates."],
+["Ex Machina",2014,"p",108,0,"brain,tense",0,"a24,osc,sci","A programmer tests whether a captivating android is truly conscious."],
+["Before Sunrise",1995,"p",101,0,"love,cozy",0,"ind,date","Two strangers meet on a train and spend one night walking around Vienna."],
+["Eternal Sunshine of the Spotless Mind",2004,"p",108,0,"love,weird,cry",0,"osc,sci,date","An ex-couple erases each other from memory, but love fights back."],
+["About Time",2013,"p",123,0,"love,cry,cozy",0,"eu,date","A young man learns he can time-travel and uses it to find love."],
+["Paddington 2",2017,"p",103,0,"cozy,fun",0,"eu,date","Paddington is framed for theft and lands in prison, which he promptly charms."],
+["The Grand Budapest Hotel",2014,"p",99,0,"fun,cozy",0,"osc,date","A legendary concierge and his lobby boy get tangled in a murder and a stolen painting."],
+["Everything Everywhere All at Once",2022,"p",139,0,"weird,fun,cry,epic",0,"a24,osc","A laundromat owner must save the multiverse, and fix things with her daughter."],
+["Hot Fuzz",2007,"p",121,0,"fun,rush",0,"eu,cult","A supercop is reassigned to a sleepy English village with a deadly secret."],
+["What We Do in the Shadows",2014,"p",86,0,"fun,weird",0,"ind,cult","A mockumentary about vampire flatmates in Wellington."],
+["Amélie",2001,"p",122,0,"love,cozy,fun",0,"eu,date","A shy Parisian waitress secretly improves the lives of those around her."],
+["The Nice Guys",2016,"p",116,0,"fun,rush",0,"crime,date","A thug and a hapless PI investigate a missing girl in 1977 Los Angeles."],
+["Palm Springs",2020,"p",90,0,"fun,love",0,"ind,sci,date","Two wedding guests are stuck living the same day over and over."],
+["Anatomy of a Fall",2023,"p",151,0,"brain,tense",0,"osc,fest,eu,mys","A writer is on trial for her husband's death; their son is the key witness."],
+["Mad Max: Fury Road",2015,"p",120,0,"rush,epic",0,"osc,blk","A two-hour desert chase as Furiosa helps a tyrant's wives escape."],
+["Heat",1995,"p",170,0,"tense,rush",0,"crime","A master thief and an obsessive detective circle each other across Los Angeles."],
+["No Country for Old Men",2007,"p",122,0,"tense",0,"osc,crime","A hunter takes cartel money and is pursued by an implacable killer."],
+["Children of Men",2006,"p",109,0,"tense,epic",0,"sci","In an infertile world, a cynic must protect the first pregnant woman in 18 years."],
+["Lost in Translation",2003,"p",102,0,"love,cozy,weird",0,"osc,ind,date","Two lonely Americans form an unlikely bond in a Tokyo hotel."],
+["Uncut Gems",2019,"p",135,0,"tense,rush",0,"a24,crime","A jeweller with a gambling problem makes one high-stakes bet after another."],
+["City of God",2002,"p",130,0,"rush,tense",0,"la,crime,true","Two boys grow up on opposite sides of crime in a Rio favela."],
+["Pan's Labyrinth",2006,"p",118,0,"weird,cry,scary",0,"osc,es,la","A girl in post-war Spain escapes into a dark fairy-tale world."],
+["The Silence of the Lambs",1991,"p",118,0,"scary,tense",0,"osc,crime","An FBI trainee seeks Hannibal Lecter's help to catch a serial killer."],
+["Whiplash",2014,"p",106,0,"tense",0,"osc,ind","A young drummer and a ruthless jazz teacher push each other to the edge."],
+["Aftersun",2022,"p",102,0,"cry",0,"a24,eu,ind,slow","A woman revisits a holiday with her young father through old camcorder footage."],
+["Portrait of a Lady on Fire",2019,"p",122,0,"love,cry",0,"eu,fest,slow","An 18th-century painter secretly portrays a reluctant bride on a Breton island."],
+["Mulholland Drive",2001,"p",147,0,"weird,brain",0,"fest,mys,cult","An amnesiac and an aspiring actress unravel a Hollywood mystery."],
+["Blue Velvet",1986,"p",120,0,"weird,tense",0,"cult,crime","A severed ear leads a young man into the dark underbelly of his small town."],
+["The Orphanage",2007,"p",105,0,"scary,cry",0,"es","A woman reopens her childhood orphanage as a home, then her son vanishes."],
+["The Platform",2019,"p",94,0,"tense,weird",0,"es,sci","Prisoners in a vertical jail are fed by a platform descending from the top floor."],
+["Society of the Snow",2023,"p",144,0,"cry,tense",0,"es,true","Survivors of the 1972 Andes plane crash fight to stay alive."],
+["The Skin I Live In",2011,"p",120,0,"weird,tense",0,"es","A brilliant plastic surgeon keeps a mysterious woman captive in his mansion."],
+["Talk to Her",2002,"p",112,0,"cry,love",0,"es,osc","Two men bond while caring for the women they love, both lying in comas."],
+["Volver",2006,"p",121,0,"fun,cry",0,"es,fest","Three generations of women, a dead body and a ghostly mother in La Mancha."],
+["Timecrimes",2007,"p",92,0,"brain,tense",0,"es,sci,gem,cult","A man stumbles into a time machine and makes everything much worse."],
+["Marshland",2014,"p",105,0,"tense",0,"es,crime","Two detectives hunt a killer of teenage girls in Andalusia's marshes in 1980."],
+["The Others",2001,"p",101,0,"scary",0,"es,mys","A mother of two light-sensitive children suspects her mansion is haunted."],
+["The Beasts",2022,"p",137,0,"tense",0,"es","A French couple's dream life in rural Galicia sparks a feud with their neighbours."],
+["Robot Dreams",2023,"p",102,0,"cozy,cry",0,"es,anim,gem","A lonely dog builds a robot friend in 1980s New York — wordless and moving."],
+["Once Upon a Time in Anatolia",2011,"p",157,0,"brain",0,"tr,fest,slow,crime","Police and a doctor search the steppe all night for a buried body."],
+["About Dry Grasses",2023,"p",197,0,"brain",0,"tr,fest,slow","An art teacher in remote eastern Turkey faces an accusation from a student."],
+["The Wild Pear Tree",2018,"p",188,0,"brain,cry",0,"tr,slow","A graduate returns to his village dreaming of publishing his novel."],
+["Mustang",2015,"p",97,0,"cry,tense",0,"tr,eu","Five orphaned sisters rebel as their family locks them up to marry them off."],
+["Kedi",2016,"p",79,0,"cozy",0,"tr,ind,gem","A documentary about Istanbul's street cats and the people who love them."],
+["Miracle in Cell No. 7",2019,"p",132,0,"cry",0,"tr","A gentle man with a learning disability is wrongly jailed, far from his little daughter."],
+["Roma",2018,"p",135,0,"cry",0,"la,osc,fest,slow","A year in the life of a live-in housekeeper in 1970s Mexico City."],
+["Amores Perros",2000,"p",154,0,"tense,cry",0,"la,fest","A car crash links three Mexico City lives, and their dogs."],
+["The Secret in Their Eyes",2009,"p",129,0,"brain,love",0,"la,osc,crime,mys","A retired investigator revisits an unsolved murder case, and an old love."],
+["Wild Tales",2014,"p",122,0,"fun,tense",0,"la","Six darkly funny stories of ordinary people snapping."],
+["Y Tu Mamá También",2001,"p",106,0,"love,fun",0,"la,fest","Two teenage friends and an older woman road-trip to a mythical beach."],
+["Argentina, 1985",2022,"p",140,0,"tense,brain",0,"la,true","Prosecutors take on Argentina's military junta in a historic trial."],
+["I'm Still Here",2024,"p",137,0,"cry",0,"la,osc,true","A mother fights for answers after her husband vanishes under Brazil's dictatorship."],
+["Severance",2022,"s",55,19,"brain,weird,tense",0,"sci,mys","Office workers surgically split their work memories from their personal lives."],
+["Dark",2017,"s",55,26,"brain,tense,weird",0,"eu,sci,mys","A child's disappearance reveals a time-travel conspiracy in a German town."],
+["True Detective",2014,"s",58,8,"tense,brain",0,"crime","Two detectives hunt a ritualistic killer across 17 years in Louisiana."],
+["Mindhunter",2017,"s",55,19,"tense,brain",0,"crime,true","FBI agents interview serial killers to understand how they think."],
+["Twin Peaks",1990,"s",47,30,"weird,scary",0,"cult,mys","Who killed Laura Palmer? An FBI agent, cherry pie and a very strange town."],
+["Fargo",2014,"s",53,10,"tense,fun",0,"crime","A meek insurance salesman's life is upended by a sinister drifter."],
+["Chernobyl",2019,"s",65,5,"tense,cry",0,"true","The 1986 nuclear disaster and the people who sacrificed to contain it."],
+["Squid Game",2021,"s",55,9,"tense,rush",0,"kr","Debt-ridden contestants play deadly children's games for a fortune."],
+["The Bear",2022,"s",30,38,"tense,cry",0,"","A fine-dining chef comes home to run his late brother's chaotic Chicago sandwich shop."],
+["Black Mirror",2011,"s",60,33,"brain,weird,tense",0,"eu,sci","Standalone stories about technology's darkest side."],
+["Breaking Bad",2008,"s",47,62,"tense,rush",0,"crime","A chemistry teacher becomes a meth kingpin."],
+["Better Call Saul",2015,"s",47,63,"brain,fun",0,"crime","How small-time lawyer Jimmy McGill became Saul Goodman."],
+["Succession",2018,"s",60,39,"fun,tense",0,"","A media mogul's awful children fight to inherit his empire."],
+["Shōgun",2024,"s",58,10,"epic,tense",0,"","An English pilot shipwrecked in 1600 Japan is caught in a feudal power struggle."],
+["Arcane",2021,"s",40,18,"epic,rush,cry",0,"anim","Two sisters end up on opposite sides of a war between a rich city and its undercity."],
+["Fleabag",2016,"s",26,12,"fun,cry,love",0,"eu","A messy, grieving Londoner breaks the fourth wall, and falls for a priest."],
+["Normal People",2020,"s",30,12,"love,cry",0,"eu","An on-off romance between two Irish teens, from school to university."],
+["Atlanta",2016,"s",25,41,"fun,weird",0,"","A broke Princeton dropout manages his cousin's rising rap career."],
+["The Leftovers",2014,"s",55,28,"cry,weird",0,"","2% of the world vanishes; a small town struggles with what's left."],
+["Station Eleven",2021,"s",55,10,"cry,epic",0,"sci","A travelling troupe performs Shakespeare after a pandemic ends civilisation."],
+["Ripley",2024,"s",55,8,"tense",0,"crime","A grifter is sent to Italy to bring home a rich man's son. Black-and-white noir."],
+["The Haunting of Hill House",2018,"s",55,10,"scary,cry",0,"","Siblings who grew up in a haunted house are drawn back by tragedy."],
+["Midnight Mass",2021,"s",60,7,"scary,cry",0,"","A charismatic priest brings miracles, and darkness, to a remote island."],
+["Beef",2023,"s",34,10,"fun,tense",0,"a24","A road-rage incident spirals into an all-consuming feud."],
+["Kingdom",2019,"s",50,12,"scary,rush",0,"kr","A crown prince fights a zombie plague in Joseon-era Korea."],
+["My Mister",2018,"s",75,16,"cry,cozy",0,"kr,gem","A weary engineer and a struggling young woman quietly help each other heal."],
+["Signal",2016,"s",70,16,"brain,tense",0,"kr,crime,mys","A walkie-talkie connects detectives across time to solve cold cases."],
+["Hellbound",2021,"s",55,12,"weird,scary",0,"kr","Supernatural beings condemn people to hell, and a cult rises around it."],
+["Moving",2023,"s",50,20,"rush,love",0,"kr","Teens hiding superpowers, and the parents with secrets who protect them."],
+["Alice in Borderland",2020,"s",50,22,"rush,tense",0,"jp,sci","Gamers are trapped in an empty Tokyo where deadly games decide who survives."],
+["Pachinko",2022,"s",55,16,"cry,epic",0,"kr","Four generations of a Korean family across Korea, Japan and America."],
+["Mr. Robot",2015,"s",50,45,"brain,tense",0,"sci","A hacker with social anxiety joins an underground group to take down a megacorp."],
+["Peaky Blinders",2013,"s",58,36,"rush,tense",0,"eu,crime","Tommy Shelby's Birmingham gang climbs the underworld after WWI."],
+["Andor",2022,"s",50,24,"epic,tense",0,"sci","A thief becomes a rebel as the Empire tightens its grip."],
+["The Office",2005,"s",22,201,"fun,cozy",0,"date","A mockumentary about the very ordinary employees of a paper company."],
+["Brooklyn Nine-Nine",2013,"s",22,153,"fun,cozy",0,"date","A goofy but brilliant detective and his oddball precinct."],
+["What We Do in the Shadows (TV)",2019,"s",25,61,"fun,weird",0,"","Vampire roommates on Staten Island try to adapt to modern life."],
+["Only Murders in the Building",2021,"s",30,50,"fun,brain,cozy",0,"mys,date","Three true-crime podcast fans investigate a death in their building."],
+["Ted Lasso",2020,"s",40,34,"fun,cozy,cry",0,"date","An American football coach with zero soccer knowledge takes over a London club."],
+["The Good Place",2016,"s",22,53,"fun,brain,cozy",0,"date","A selfish woman lands in the afterlife's 'Good Place' by mistake."],
+["Shrinking",2023,"s",32,22,"fun,cry,cozy",0,"","A grieving therapist starts telling his patients exactly what he thinks."],
+["Slow Horses",2022,"s",45,30,"tense,fun",0,"eu,crime","Disgraced MI5 agents in a dumping-ground office keep stumbling into real cases."],
+["Blue Eye Samurai",2023,"s",45,8,"rush,epic",0,"anim","A mixed-race swordswoman hunts for revenge in Edo-period Japan."],
+["Scavengers Reign",2023,"s",25,12,"weird",0,"anim,sci,gem","Stranded crew members survive on a beautiful, deadly alien planet."],
+["Love, Death & Robots",2019,"s",15,35,"weird,rush",0,"anim,sci","An animated anthology of sci-fi, horror and comedy shorts."],
+["Pluribus",2025,"s",50,9,"weird,brain",0,"sci","Vince Gilligan: the unhappiest person on Earth must save the world from happiness."],
+["The Last of Us",2023,"s",55,16,"cry,scary,epic",0,"","A smuggler escorts a teenage girl across a post-pandemic America."],
+["Sherlock",2010,"s",88,13,"brain,rush",0,"eu,mys","Holmes and Watson solve cases in modern-day London."],
+["Over the Garden Wall",2014,"s",11,10,"cozy,weird",0,"anim,gem","Two brothers lost in a strange autumn forest. Perfect for a chilly night."],
+["BoJack Horseman",2014,"s",25,77,"fun,cry",0,"anim","A washed-up sitcom horse grapples with fame and self-destruction."],
+["Adolescence",2025,"s",60,4,"cry,tense",0,"eu","A 13-year-old is arrested for murder; each episode is one continuous take."],
+["Baby Reindeer",2024,"s",33,7,"tense,weird",0,"eu,true","A struggling comedian is stalked by a woman he once showed kindness to."],
+["The Queen's Gambit",2020,"s",55,7,"brain,cozy",0,"","An orphan chess prodigy rises through the 1960s chess world."],
+["Hannibal",2013,"s",43,39,"scary,tense,weird",0,"crime,cult","An FBI profiler gets help from his psychiatrist, cannibal Hannibal Lecter."],
+["Mare of Easttown",2021,"s",58,7,"tense",0,"crime,mys","A small-town detective investigates a murder while her own life falls apart."],
+["Money Heist",2017,"s",50,41,"rush,tense",0,"es,crime","A mastermind called the Professor leads a crew to rob Spain's Royal Mint."],
+["30 Coins",2020,"s",60,16,"scary,weird",0,"es","An exorcist priest hiding in a Spanish village is hunted for a cursed coin."],
+["Paquita Salas",2016,"s",30,15,"fun",0,"es,gem","A washed-up talent agent from Navarre fights to stay relevant in Madrid."],
+["Ethos",2020,"s",55,8,"cry,brain",0,"tr,gem","Lives from opposite sides of Istanbul intersect through a therapist's office."],
+["Orb: On the Movements of the Earth",2024,"a",24,25,"brain,epic,cry",1,"","Heretics in 15th-century Europe risk death to prove that the Earth moves."],
+["Delicious in Dungeon",2024,"a",24,24,"fun,cozy,epic",1,"","Adventurers cook and eat monsters to survive a dungeon and rescue a friend."],
+["Kaguya-sama: Ultra Romantic",2022,"a",24,13,"fun,love",1,"date","Two genius student-council rivals scheme to make the other confess first."],
+["Little Witch Academia",2017,"a",24,25,"cozy,fun",1,"","A clumsy, enthusiastic girl enrols at a prestigious academy for witches."],
+["Mob Psycho 100",2016,"a",24,12,"fun,rush",1,"","An awkward boy with insane psychic powers just wants a normal life."],
+["Solo Leveling S2",2025,"a",24,13,"rush",1,"","The world's weakest hunter keeps levelling up into the monarch of a shadow army."],
+["Your Lie in April",2014,"a",23,22,"cry,love",1,"","A pianist who can't hear his own notes meets a free-spirited violinist."],
+["Gurren Lagann",2007,"a",24,27,"epic,rush",1,"cult","Two boys break out of their underground village and drill their way to the heavens."],
+["The Apothecary Diaries S2",2025,"a",24,24,"brain,cozy",1,"mys","Maomao, a sharp-witted apothecary, solves poison mysteries inside the imperial palace."],
+["Kill la Kill",2013,"a",24,24,"rush,weird,fun",1,"cult","A girl with half a giant scissor takes on a school ruled by power-granting uniforms."],
+["The Summer Hikaru Died",2025,"a",24,12,"scary,weird",1,"","A boy realises his best friend has been replaced by something not human."],
+["Summer Time Rendering",2022,"a",24,25,"tense,brain",1,"mys,sci","Back on his island hometown, a young man is caught in a time loop of murderous doppelgängers."],
+["YAIBA: Samurai Legend",2025,"a",24,24,"rush,fun",1,"","A wild boy raised in the jungle dreams of becoming a true samurai."],
+["Gundam GQuuuuuuX",2025,"a",24,12,"epic,rush",1,"sci","A schoolgirl in an alternate Gundam universe joins illegal mobile-suit duels."],
+["Horimiya",2021,"a",24,13,"love,cozy",1,"date","A popular girl and a gloomy-looking classmate discover each other's hidden sides."],
+["Parasyte -the maxim-",2014,"a",24,24,"scary,rush",1,"sci","A teen's right hand is taken over by an alien parasite and they must coexist."],
+["Blue Box",2024,"a",24,25,"love,cozy",1,"date","A badminton player falls for the basketball star who moves into his house."],
+["ReLIFE",2016,"a",24,13,"love,cozy",1,"","A jobless 27-year-old takes a pill to relive one year of high school."],
+["Grand Blue",2018,"a",24,12,"fun",1,"","A college freshman joins a diving club that mostly dives into alcohol."],
+["Mushishi",2005,"a",24,26,"cozy,weird",1,"slow","A wandering expert helps villagers afflicted by mysterious life-forms called mushi."],
+["Monogatari Second Season",2013,"a",24,26,"weird,love",1,"","Araragi's circle faces new apparitions as Tsubasa, Mayoi and Nadeko take centre stage."],
+["Owarimonogatari S2",2017,"a",24,7,"weird,brain",1,"mys","Araragi confronts the truth at the heart of the Monogatari saga."],
+["Nisemonogatari",2012,"a",24,11,"weird,fun",1,"","Araragi's sisters get tangled up with a con man of the supernatural."],
+["Nekomonogatari (Black)",2012,"a",24,4,"weird,love",1,"","How Tsubasa Hanekawa came to be possessed by a cat during Golden Week."],
+["Mushoku Tensei",2021,"a",24,11,"epic",1,"","A shut-in reincarnates in a world of magic, determined to live right this time."],
+["Undead Unluck",2023,"a",24,24,"rush,fun",1,"","An immortal man and a girl whose touch brings bad luck team up."],
+["Tomodachi Game",2022,"a",24,12,"tense,brain",1,"","Five friends are forced into psychological games to pay off a debt."],
+["Bocchi the Rock! S2",2026,"a",24,12,"fun,cozy",1,"","Painfully shy guitarist Bocchi keeps rocking with Kessoku Band."],
+["Aoashi S2",2026,"a",24,12,"rush,epic",1,"","Ashito keeps fighting for his place in a top Tokyo youth football academy."],
+["Hyouka",2012,"a",24,22,"brain,cozy",1,"mys","A lazy student is dragged into solving everyday mysteries by a curious classmate."],
+["Dragon Pilot: Hisone & Masotan",2018,"a",24,12,"cozy,weird",1,"gem","A blunt new recruit becomes the pilot of a dragon disguised as a fighter jet."],
+["Umamusume: Cinderella Gray",2025,"a",24,23,"rush,cry",1,"","Oguri Cap, a horse girl from a rural track, takes the racing world by storm."],
+["A Ninja and an Assassin Under One Roof",2025,"a",24,12,"fun,rush",1,"","A hitwoman takes in a runaway ninja girl as her roommate."],
+["Lycoris Recoil",2022,"a",24,13,"rush,cozy",1,"","Two schoolgirl agents run a café while secretly fighting crime in Tokyo."],
+["Wonder Egg Priority",2021,"a",24,12,"weird,cry",1,"","A girl enters a dream world to save other girls, hoping to bring back her friend."],
+["Madoka Magica",2011,"a",24,12,"weird,cry,tense",1,"cult","Schoolgirls are offered a wish in exchange for becoming magical girls. Don't trust the cat."],
+["Paprika",2006,"a",90,0,"weird,brain",1,"jp,sci,cult","A dream therapist chases a thief who stole a device that lets people share dreams."],
+["Look Back",2024,"a",58,0,"cry",1,"jp","Two girls bond over drawing manga. From Chainsaw Man's Tatsuki Fujimoto."],
+["Gintama",2006,"a",24,201,"fun",1,"","A lazy samurai does odd jobs in an alien-occupied Edo. Absurd, endless parody."],
+["Bungo Stray Dogs",2016,"a",24,12,"rush,fun",1,"","Detectives named after famous writers fight with supernatural abilities in Yokohama."],
+["From the New World",2012,"a",24,25,"brain,tense,weird",1,"sci","In a utopian future, kids with psychic powers uncover the dark truth of their society."],
+["Kaiba",2008,"a",24,12,"weird,cry",1,"gem,sci","An amnesiac wanders a world where memories are traded and bodies are disposable."],
+["Jin-Roh: The Wolf Brigade",1999,"a",102,0,"tense,cry",1,"jp","A soldier in an alternate post-war Tokyo bonds with a terrorist's sister."],
+["Flowers of Evil",2013,"a",24,13,"weird,tense",1,"","A boy steals his crush's gym clothes and is blackmailed by a very strange girl."],
+["March Comes in Like a Lion",2016,"a",24,22,"cry,cozy",1,"","A lonely teen shogi pro finds warmth with three sisters."],
+["Trigun Stampede",2023,"a",24,12,"rush",1,"sci","Vash the Stampede, a gunman with a huge bounty, refuses to kill anyone."],
+["Tamako Market",2013,"a",24,12,"cozy,fun",1,"","A mochi-shop girl's daily life changes when a talking bird shows up."],
+["Texhnolyze",2003,"a",24,22,"weird,tense",1,"cult,sci","A boxer who loses his limbs gets cybernetic ones in a decaying underground city."],
+["Banana Fish",2018,"a",24,24,"tense,cry",1,"crime","A young New York gang leader uncovers a deadly drug conspiracy."],
+["Takopi's Original Sin",2025,"a",24,6,"cry,weird",1,"","A happy alien tries to make a bullied girl smile, and things get very dark."],
+["Clannad",2007,"a",24,23,"cry,love",1,"","A delinquent meets a shy girl repeating her final year and helps her revive the drama club."],
+["Call of the Night S2",2025,"a",24,12,"love,weird",1,"","An insomniac boy and a vampire girl continue their night-time adventures."],
+["The Fragrant Flower Blooms With Dignity",2025,"a",24,13,"love,cozy",1,"date","A boy from a rough school falls for a girl from the elite academy next door."],
+["Cyberpunk: Edgerunners 2",2026,"a",25,10,"rush,cry",1,"sci","A new story on the dangerous streets of Night City."],
+["LIAR GAME",2026,"a",24,12,"tense,brain",1,"","An honest girl is dragged into a high-stakes tournament of lies."],
+["NANA",2006,"a",24,47,"love,cry",1,"","Two girls named Nana meet on a train to Tokyo and end up sharing an apartment."],
+["Tatsuki Fujimoto 17-26",2025,"a",17,8,"weird,cry",1,"","An anthology adapting Tatsuki Fujimoto's early short stories."],
+["Journal with Witch",2026,"a",24,13,"cozy,cry",1,"","A reclusive novelist takes in her orphaned teenage niece."],
+["ACCA: 13-Territory Inspection Dept.",2017,"a",24,12,"brain,cozy",1,"gem","A laid-back inspector gets caught in coup rumours in a kingdom of 13 districts."],
+["The Night Is Short, Walk On Girl",2017,"a",93,0,"fun,weird,love",1,"jp,date","A young woman's wild night out in Kyoto, chased by a smitten senior."],
+["Sparks of Tomorrow",2026,"a",24,12,"brain,weird",1,"","A brand-new original series. Go in blind!"],
+["Cowboy Bebop",1998,"a",24,26,"rush,cozy,weird",0,"cult,sci","Bounty hunters drift through space, jazz and their own pasts."],
+["Fullmetal Alchemist: Brotherhood",2009,"a",24,64,"epic,cry",0,"","Two brothers hunt the Philosopher's Stone after alchemy costs them dearly."],
+["Ghost in the Shell",1995,"a",83,0,"brain,weird",0,"jp,cult,sci","A cyborg agent hunts a mysterious hacker known as the Puppet Master."],
+["Millennium Actress",2001,"a",87,0,"love,cry",0,"jp,gem","A retired actress's life story blurs with the roles she played."],
+["Paranoia Agent",2004,"a",24,13,"weird,tense",0,"cult,mys","A boy on golden rollerblades attacks people across Tokyo."],
+["Your Name",2016,"a",106,0,"love,cry",0,"jp,date","A city boy and a country girl mysteriously start swapping bodies."],
+["Wolf Children",2012,"a",117,0,"cry,cozy",0,"jp","A young mother raises two half-wolf children on her own."],
+["Princess Mononoke",1997,"a",134,0,"epic,rush",0,"jp","A cursed prince is caught in a war between forest gods and humans."],
+["Nausicaä of the Valley of the Wind",1984,"a",117,0,"epic",0,"jp","A princess seeks peace between humans and a toxic jungle."],
+["Made in Abyss",2017,"a",24,13,"epic,cry,scary",0,"","A girl and a robot boy descend into a giant, deadly chasm."],
+["Pluto",2023,"a",60,8,"brain,cry",0,"sci,mys","A robot detective investigates murders of the world's most advanced robots."],
+["Erased",2016,"a",23,12,"tense,cry",0,"mys","A man sent back to his childhood tries to stop a serial killer."],
+["Samurai Champloo",2004,"a",24,26,"rush,fun",0,"cult","Two swordsmen and a girl search for 'the samurai who smells of sunflowers'."],
+["Violet Evergarden",2018,"a",24,13,"cry",0,"","A former child soldier becomes a letter writer to understand the words 'I love you'."],
+["Dorohedoro",2020,"a",24,12,"weird,fun,rush",0,"cult","A lizard-headed man hunts the sorcerer who cursed him."],
+["Ergo Proxy",2006,"a",24,23,"weird,brain",0,"sci","An inspector in a domed city investigates androids infected by a mysterious virus."],
+["Jiro Dreams of Sushi",2011,"p",81,0,"cozy",0,"gem","An 85-year-old sushi master's lifelong pursuit of perfection in a tiny Tokyo restaurant."],
+["Free Solo",2018,"p",100,0,"tense,rush",0,"osc,true","Alex Honnold attempts to climb El Capitan without ropes."],
+["My Octopus Teacher",2020,"p",85,0,"cozy,cry",0,"osc,true","A filmmaker forms an unlikely bond with an octopus in a South African kelp forest."],
+["Searching for Sugar Man",2012,"p",86,0,"cozy,cry",0,"osc,true,gem","Two South African fans set out to find the forgotten musician they idolised."],
+["Man on Wire",2008,"p",94,0,"tense,cozy",0,"osc,true","Philippe Petit's illegal high-wire walk between the Twin Towers in 1974."],
+["Senna",2010,"p",106,0,"rush,cry",0,"true","The life and death of Formula 1 legend Ayrton Senna, told through archive footage."],
+["Alien",1979,"p",117,0,"scary,tense",0,"osc,cult,sci","A cargo ship's crew answers a distress call and picks up a deadly stowaway."],
+["Jaws",1975,"p",124,0,"tense,scary,rush",0,"osc,blk","A great white shark terrorises a beach town over the Fourth of July."],
+["Chinatown",1974,"p",130,0,"tense,brain",0,"osc,crime,mys","A private eye uncovers a water-rights conspiracy in 1930s Los Angeles."],
+["Annie Hall",1977,"p",93,0,"fun,love",0,"osc,date","A neurotic comedian looks back on his relationship with the free-spirited Annie."],
+["Stalker",1979,"p",162,0,"brain,weird",0,"cult,sci,slow","A guide leads two men through the forbidden Zone to a room that grants wishes."],
+["Suspiria",1977,"p",98,0,"scary,weird",0,"cult","An American dancer discovers her German ballet academy hides a coven of witches."],
+["Network",1976,"p",121,0,"fun,brain",0,"osc","A TV anchor's on-air breakdown becomes a ratings goldmine."],
+["Rocky",1976,"p",120,0,"cry,rush",0,"osc","A small-time Philadelphia boxer gets a shot at the heavyweight title."],
+["Barry Lyndon",1975,"p",185,0,"epic,brain",0,"osc,slow","An Irish opportunist schemes his way into 18th-century aristocracy, shot by candlelight."],
+["2001: A Space Odyssey",1968,"p",149,0,"brain,weird,epic",0,"osc,cult,sci,slow","From the dawn of man to a mission to Jupiter, guided by mysterious monoliths."],
+["The Apartment",1960,"p",125,0,"fun,love,cry",0,"osc,date","An insurance clerk lends his flat to his bosses' affairs, then falls for the elevator girl."],
+["Persona",1966,"p",85,0,"brain,weird",0,"slow","A nurse and her mute actress patient begin to merge on a remote island."],
+["Lawrence of Arabia",1962,"p",218,0,"epic",0,"osc,true,blk","T.E. Lawrence unites Arab tribes against the Ottomans during WWI."],
+["The Good, the Bad and the Ugly",1966,"p",178,0,"rush,epic",0,"cult","Three gunslingers race for buried Confederate gold during the Civil War."],
+["Rear Window",1954,"p",112,0,"tense,brain",0,"mys","A photographer stuck in a wheelchair suspects his neighbour of murder."],
+["Some Like It Hot",1959,"p",121,0,"fun,love",0,"osc,date","Two musicians on the run from the mob hide in an all-female band."],
+["Singin' in the Rain",1952,"p",103,0,"fun,cozy,love",0,"date","Hollywood's messy switch from silent films to talkies, in song and dance."],
+["Sunset Boulevard",1950,"p",110,0,"tense,weird",0,"osc,cult","A struggling screenwriter gets entangled with a faded silent-film star."],
+["Blade Runner",1982,"p",117,0,"brain,weird",0,"cult,sci","A detective hunts rogue replicants in a rain-soaked future Los Angeles."],
+["Do the Right Thing",1989,"p",120,0,"tense,fun",0,"cult","Tensions boil over on a Brooklyn block on the hottest day of the year."],
+["Paris, Texas",1984,"p",147,0,"cry,love",0,"fest,slow","A man wanders out of the desert after four years to reconnect with his family."],
+["The Breakfast Club",1985,"p",97,0,"fun,cry",0,"cult,date","Five very different teens spend a Saturday detention together."],
+["When Harry Met Sally...",1989,"p",96,0,"fun,love,cozy",0,"date","Can men and women just be friends? Twelve years of trying to find out."],
+["Wings of Desire",1987,"p",128,0,"love,weird",0,"fest,slow","An angel watching over Berlin longs to become human."],
+["Grave of the Fireflies",1988,"a",89,0,"cry",0,"jp","Two orphaned siblings struggle to survive in Japan at the end of WWII."],
+["Kiki's Delivery Service",1989,"a",103,0,"cozy",0,"jp,date","A young witch starts a flying delivery service in a seaside town."],
+["Aliens",1986,"p",137,0,"rush,scary",0,"osc,blk,sci","Ripley returns to the alien planet with a squad of marines."],
+["Stand by Me",1986,"p",89,0,"cozy,cry",0,"","Four boys hike through the woods one summer to find a dead body."],
+["Amadeus",1984,"p",160,0,"epic,brain",0,"osc","A jealous Salieri recounts his rivalry with the young genius Mozart."],
+["Raging Bull",1980,"p",129,0,"tense",0,"osc,true","The violent rise and fall of boxer Jake LaMotta."],
+["Groundhog Day",1993,"p",101,0,"fun,love,cozy",0,"date","A grumpy weatherman relives the same day in a small town, over and over."],
+["Magnolia",1999,"p",188,0,"cry,weird",0,"fest","A web of lonely Los Angeles lives converges on one very strange day."],
+["The Big Lebowski",1998,"p",117,0,"fun,weird",0,"cult","The Dude, a ruined rug and a kidnapping scheme that keeps spiralling."],
+["Hana-bi",1997,"p",103,0,"tense,cry",0,"fest","Takeshi Kitano: a violent ex-cop plans one last trip with his dying wife."],
+["Run Lola Run",1998,"p",81,0,"rush",0,"cult","Lola has 20 minutes to find 100,000 marks and save her boyfriend. Three tries."],
+["Léon: The Professional",1994,"p",110,0,"rush,tense",0,"cult","A hitman reluctantly takes in a 12-year-old girl whose family was murdered."],
+["The Usual Suspects",1995,"p",106,0,"brain,tense",0,"osc,crime,mys","Five criminals, one line-up, and the legend of Keyser Söze."],
+["Boogie Nights",1997,"p",155,0,"fun,rush",0,"","A young dishwasher becomes a star of the 1970s adult film industry."],
+["Inside Llewyn Davis",2013,"p",104,0,"cry,fun",0,"fest","A week in the life of a struggling folk singer in 1961 New York."],
+["Once",2007,"p",86,0,"love,cozy",0,"osc,ind,date","A Dublin busker and a Czech immigrant write songs together over one week."],
+["Sing Street",2016,"p",106,0,"fun,love,cozy",0,"date,gem","A Dublin teen starts a band in 1985 to impress a mysterious girl."],
+["Linda Linda Linda",2005,"p",114,0,"cozy,fun",0,"gem","Three schoolgirls and a Korean exchange student form a punk band for the school festival."],
+["Moneyball",2011,"p",133,0,"brain",0,"true","A baseball GM uses statistics to build a winning team on a tiny budget."],
+["The Iron Claw",2023,"p",132,0,"cry",0,"a24,true","The Von Erich brothers, a family of wrestlers haunted by tragedy."],
+["The First Slam Dunk",2022,"a",124,0,"rush,cry",0,"jp","Shohoku's point guard confronts his past during the championship's biggest game."],
+["Ford v Ferrari",2019,"p",152,0,"rush",0,"osc,true","Carroll Shelby and Ken Miles build a car to beat Ferrari at Le Mans."]
+];
+const G={"Ran":"jp|war,per,dra","Akira":"jp|act,sci","Mother":"kr|thr,crime,mys,dra","GoodFellas":"us|crime,dra","Rush Hour":"us|act,com","Fury":"us+uk|war,act,dra","It Ends":"us|thr,psy","Harakiri":"jp|dra,per","Seven Samurai":"jp|act,adv,per","Ikiru":"jp|dra","In the Mood for Love":"cn|rom,dra","Chungking Express":"cn|rom,com","Wake Up Dead Man":"us|mys,com,crime","Avatar: Fire and Ash":"us|sci,adv,act","One Battle After Another":"us|act,thr,sat","Frankenstein":"us|hor,fan,dra,per","Taxi Driver":"us|psy,crime,dra","Come and See":"ru|war,dra","There Will Be Blood":"us|dra,per","Trainspotting":"uk|com,dra,crime","Apocalypse Now":"us|war,psy","The Lighthouse":"us|hor,psy","12 Angry Men":"us|dra,crime","Yi Yi":"cn|dra,fam","Possession":"fr+de|hor,psy,dra","A Brighter Summer Day":"cn|dra,coa,crime","Hamnet":"uk|dra,per","Still Walking":"jp|dra,fam","Three Colours: Red":"fr+pl+ch|dra,rom","Cure":"jp|thr,hor,crime,psy","The Elephant Man":"uk+us|dra,per","Vertigo":"us|thr,mys,rom,psy","All About Lily Chou-Chou":"jp|dra,coa,mus","High and Low":"jp|crime,thr","Millennium Mambo":"cn|dra,rom","Suzhou River":"cn|rom,mys","Good Boy":"us|hor,sup","Small, Slow But Steady":"jp|dra,spo","Winter Sleep":"tr|dra","Undertone":"ca|hor,sup","Tuner":"us|thr,crime","The Wailing":"kr|hor,sup,mys","The Wave":"de|dra,thr","Digger":"us|com,sat","Resident Evil":"us|hor,act","Clue":"us|com,mys","Sympathy for Mr. Vengeance":"kr|thr,crime","The Empty Man":"us|hor,sup,mys","A Cure for Wellness":"us+de|hor,psy,mys","The Perfection":"us|hor,thr","Companion":"us|thr,sci,com","(500) Days of Summer":"us|rom,com","No Reservations":"us|rom,com","13 Going on 30":"us|rom,com,fan","A Quiet Place":"us|hor,sci","The Strangers: Chapter 1":"us|hor,thr","Subservience":"us|thr,sci","Strange Darling":"us|thr,hor",
+"The Handmaiden":"kr|thr,rom,per","Decision to Leave":"kr|mys,rom,crime","Thirst":"kr|hor,rom","Joint Security Area":"kr|thr,mys,dra","The Host":"kr|hor,sci,com","Mickey 17":"us|sci,com,sat","I Saw the Devil":"kr|thr,hor,crime","The Chaser":"kr|thr,crime","A Bittersweet Life":"kr|act,crime","Burning":"kr|mys,psy,dra","Exhuma":"kr|hor,sup,mys","The Man from Nowhere":"kr|act,crime,thr","Past Lives":"us+kr|rom,dra","Happy Together":"cn|rom,dra","2046":"cn|rom,dra,sci","Days of Being Wild":"cn|rom,dra","Shoplifters":"jp|dra,fam,crime","After Life":"jp|dra,fan","Our Little Sister":"jp|dra,fam,sol","Late Spring":"jp|dra,fam","Yojimbo":"jp|act,per","Throne of Blood":"jp|dra,per,war","Drive My Car":"jp|dra","Pulse":"jp|hor,sup","Perfect Days":"jp|dra,sol","One Cut of the Dead":"jp|com,hor","Arrival":"us|sci,dra","Sicario":"us|thr,crime,act","Incendies":"ca|dra,mys,war","The Game":"us|thr,mys,psy","Oppenheimer":"us|dra,per,war","Tenet":"us|act,sci,thr","The Favourite":"uk|com,per,sat","The Lobster":"ie+uk|com,rom,sat","The Northman":"us|act,adv,per","Nosferatu":"us|hor,sup,per","The Shining":"us+uk|hor,psy","Rosemary's Baby":"us|hor,psy","The Thing":"us|hor,sci","Talk to Me":"au|hor,sup","Pearl":"us|hor,psy","X":"us|hor","Under the Skin":"uk|sci,psy","Annihilation":"us|sci,hor","Ex Machina":"uk|sci,thr","Before Sunrise":"us+at|rom","Eternal Sunshine of the Spotless Mind":"us|rom,sci,dra","About Time":"uk|rom,com,fan","Paddington 2":"uk|fam,com","The Grand Budapest Hotel":"us+de|com,adv,crime","Everything Everywhere All at Once":"us|sci,com,act,fam","Hot Fuzz":"uk|com,act,crime","What We Do in the Shadows":"nz|com,hor","Amélie":"fr|rom,com","The Nice Guys":"us|com,crime,act","Palm Springs":"us|com,rom,sci","Anatomy of a Fall":"fr|dra,mys,crime","Mad Max: Fury Road":"au+us|act,sci,adv","Heat":"us|crime,act,thr","No Country for Old Men":"us|thr,crime","Children of Men":"uk+us|sci,thr","Lost in Translation":"us|dra,rom,com","Uncut Gems":"us|thr,crime","City of God":"la|crime,dra,coa","Pan's Labyrinth":"es+la|fan,war,dra","The Silence of the Lambs":"us|thr,hor,crime","Whiplash":"us|dra,mus,psy","Aftersun":"uk|dra","Portrait of a Lady on Fire":"fr|rom,dra,per","Mulholland Drive":"us|mys,psy","Blue Velvet":"us|mys,thr,psy",
+"The Orphanage":"es|hor,sup","The Platform":"es|sci,thr,sat","Society of the Snow":"es|dra,adv","The Skin I Live In":"es|thr,psy","Talk to Her":"es|dra,rom","Volver":"es|com,dra","Timecrimes":"es|sci,thr","Marshland":"es|crime,thr,mys","The Others":"es|hor,sup,mys","The Beasts":"es+fr|thr,dra","Robot Dreams":"es|fam,dra,com","Once Upon a Time in Anatolia":"tr|crime,dra","About Dry Grasses":"tr|dra","The Wild Pear Tree":"tr|dra","Mustang":"tr+fr|dra,coa","Kedi":"tr|doc","Miracle in Cell No. 7":"tr|dra,fam","Roma":"la|dra,per","Amores Perros":"la|dra,crime,thr","The Secret in Their Eyes":"la|crime,mys,rom","Wild Tales":"la|com,sat","Y Tu Mamá También":"la|dra,coa,rom","Argentina, 1985":"la|dra,per","I'm Still Here":"la|dra,per,fam",
+"Severance":"us|sci,thr,mys","Dark":"de|sci,mys,sup","True Detective":"us|crime,mys,thr","Mindhunter":"us|crime,thr,psy","Twin Peaks":"us|mys,sup,crime","Fargo":"us|crime,com,thr","Chernobyl":"us+uk|dra,per","Squid Game":"kr|thr,sat","The Bear":"us|dra,com","Black Mirror":"uk|sci,sat,thr","Breaking Bad":"us|crime,dra,thr","Better Call Saul":"us|crime,dra","Succession":"us|dra,com,sat","Shōgun":"us|dra,per,war,act","Arcane":"us+fr|act,fan,sci","Fleabag":"uk|com,dra","Normal People":"ie|rom,dra,coa","Atlanta":"us|com,sat","The Leftovers":"us|dra,sup,mys","Station Eleven":"us|sci,dra","Ripley":"us|crime,thr","The Haunting of Hill House":"us|hor,sup,fam","Midnight Mass":"us|hor,sup","Beef":"us|com,dra","Kingdom":"kr|hor,per,act","My Mister":"kr|dra,sol","Signal":"kr|crime,mys,fan","Hellbound":"kr|sup,hor,thr","Moving":"kr|act,fan,rom","Alice in Borderland":"jp|thr,sci,act","Pachinko":"kr+us|dra,fam,per","Mr. Robot":"us|thr,psy","Peaky Blinders":"uk|crime,per,dra","Andor":"us|sci,thr,war","The Office":"us|com","Brooklyn Nine-Nine":"us|com,crime","What We Do in the Shadows (TV)":"us|com,hor","Only Murders in the Building":"us|com,mys","Ted Lasso":"us+uk|com,spo","The Good Place":"us|com,fan","Shrinking":"us|com,dra","Slow Horses":"uk|thr,com","Blue Eye Samurai":"us|act,per","Scavengers Reign":"us|sci,adv","Love, Death & Robots":"us|sci,hor,com","Pluribus":"us|sci,dra","The Last of Us":"us|dra,hor,adv","Sherlock":"uk|mys,crime","Over the Garden Wall":"us|fan,adv,fam","BoJack Horseman":"us|com,dra,sat","Adolescence":"uk|dra,crime","Baby Reindeer":"uk|dra,psy,thr","The Queen's Gambit":"us|dra,per,spo","Hannibal":"us|crime,hor,psy","Mare of Easttown":"us|crime,mys,dra","Money Heist":"es|crime,thr,act","30 Coins":"es|hor,sup","Paquita Salas":"es|com","Ethos":"tr|dra",
+"Orb: On the Movements of the Earth":"|per,dra","Delicious in Dungeon":"|fan,adv,com","Kaguya-sama: Ultra Romantic":"|rom,com","Little Witch Academia":"|fan,com,coa","Mob Psycho 100":"|act,com,sup,coa","Solo Leveling S2":"|act,fan","Your Lie in April":"|dra,rom,mus","Gurren Lagann":"|act,sci,adv","The Apothecary Diaries S2":"|mys,per","Kill la Kill":"|act,com","The Summer Hikaru Died":"|hor,sup,coa","Summer Time Rendering":"|mys,sup,thr","YAIBA: Samurai Legend":"|act,adv,com","Gundam GQuuuuuuX":"|sci,act","Horimiya":"|rom,sol","Parasyte -the maxim-":"|hor,sci,act","Blue Box":"|rom,spo","ReLIFE":"|rom,sol,coa","Grand Blue":"|com,sol","Mushishi":"|sup,sol","Monogatari Second Season":"|sup,mys,rom","Owarimonogatari S2":"|sup,mys","Nisemonogatari":"|sup,com","Nekomonogatari (Black)":"|sup,rom","Mushoku Tensei":"|fan,adv","Undead Unluck":"|act,sup,com","Tomodachi Game":"|thr,psy","Bocchi the Rock! S2":"|com,mus,sol","Aoashi S2":"|spo,coa","Hyouka":"|mys,sol","Dragon Pilot: Hisone & Masotan":"|fan,com","Umamusume: Cinderella Gray":"|spo,dra","A Ninja and an Assassin Under One Roof":"|com,act","Lycoris Recoil":"|act,com","Wonder Egg Priority":"|psy,fan","Madoka Magica":"|fan,psy,dra","Paprika":"|sci,psy","Look Back":"|dra,coa","Gintama":"|com,sat,sci","Bungo Stray Dogs":"|act,sup,mys","From the New World":"|sci,mys,thr","Kaiba":"|sci,dra","Jin-Roh: The Wolf Brigade":"|dra,thr,per","Flowers of Evil":"|psy,dra,coa","March Comes in Like a Lion":"|dra,sol","Trigun Stampede":"|act,sci,adv","Tamako Market":"|sol,com","Texhnolyze":"|sci,psy","Banana Fish":"|crime,act,dra","Takopi's Original Sin":"|dra,psy","Clannad":"|dra,rom,sol","Call of the Night S2":"|rom,sup","The Fragrant Flower Blooms With Dignity":"|rom,sol","Cyberpunk: Edgerunners 2":"|sci,act","LIAR GAME":"|thr,psy","NANA":"|dra,rom,mus","Tatsuki Fujimoto 17-26":"|dra,fan","Journal with Witch":"|dra,sol,fam","ACCA: 13-Territory Inspection Dept.":"|mys,dra","The Night Is Short, Walk On Girl":"|com,rom,fan","Sparks of Tomorrow":"|dra","Cowboy Bebop":"|sci,act,adv","Fullmetal Alchemist: Brotherhood":"|fan,adv,act","Ghost in the Shell":"|sci,act,psy","Millennium Actress":"|dra,rom","Paranoia Agent":"|psy,mys","Your Name":"|rom,fan","Wolf Children":"|fam,fan,dra","Princess Mononoke":"|fan,adv","Nausicaä of the Valley of the Wind":"|fan,adv,sci","Made in Abyss":"|adv,fan","Pluto":"|sci,mys","Erased":"|mys,thr","Samurai Champloo":"|act,adv,per","Violet Evergarden":"|dra","Dorohedoro":"|fan,act,com","Ergo Proxy":"|sci,psy",
+"Jiro Dreams of Sushi":"jp|doc","Free Solo":"us|doc,spo,adv","My Octopus Teacher":"za|doc","Searching for Sugar Man":"uk|doc,mus","Man on Wire":"uk|doc","Senna":"uk|doc,spo","Alien":"us+uk|hor,sci","Jaws":"us|thr,adv,hor","Chinatown":"us|mys,crime,thr","Annie Hall":"us|com,rom","Stalker":"ru|sci,psy","Suspiria":"it|hor,sup","Network":"us|sat,dra","Rocky":"us|spo,dra","Barry Lyndon":"uk+us|per,dra","2001: A Space Odyssey":"us+uk|sci,adv","The Apartment":"us|com,rom,dra","Persona":"se|psy,dra","Lawrence of Arabia":"uk|adv,war,per","The Good, the Bad and the Ugly":"it|act,adv,per","Rear Window":"us|thr,mys","Some Like It Hot":"us|com,rom,crime","Singin' in the Rain":"us|mus,com,rom","Sunset Boulevard":"us|dra,psy","Blade Runner":"us|sci,thr","Do the Right Thing":"us|dra,com","Paris, Texas":"us+de|dra","The Breakfast Club":"us|com,coa,dra","When Harry Met Sally...":"us|rom,com","Wings of Desire":"de|fan,rom,dra","Grave of the Fireflies":"|war,dra","Kiki's Delivery Service":"|fan,coa,fam","Aliens":"us|act,sci,hor","Stand by Me":"us|coa,adv,dra","Amadeus":"us|mus,per,dra","Raging Bull":"us|spo,dra","Groundhog Day":"us|com,rom,fan","Magnolia":"us|dra","The Big Lebowski":"us|com,crime","Hana-bi":"jp|crime,dra","Run Lola Run":"de|thr,act","Léon: The Professional":"fr+us|act,crime","The Usual Suspects":"us|crime,mys,thr","Boogie Nights":"us|dra,com","Inside Llewyn Davis":"us|mus,dra,com","Once":"ie|mus,rom","Sing Street":"ie|mus,coa,com","Linda Linda Linda":"jp|mus,coa,sol","Moneyball":"us|spo,dra","The Iron Claw":"us|spo,dra,fam","The First Slam Dunk":"|spo,dra","Ford v Ferrari":"us|spo,dra,act"};
+const MO=[["fun","Funny"],["tense","Tense"],["cry","Tearjerker"],["brain","Mind-bending"],["rush","Adrenaline"],["cozy","Cozy"],["love","Romantic"],["scary","Scary"],["epic","Epic"],["weird","Weird"]];
+const ML=Object.fromEntries(MO);
+const CO={na:"North American",uk:"British",eu:"European",es:"Spanish",la:"Latin American",tr:"Turkish",kr:"Korean",jp:"Japanese",cn:"Chinese-language",asia:"Asian",sub:"Non-English",
+dra:"Drama",com:"Comedy",rom:"Romance",thr:"Thriller",hor:"Horror",mys:"Mystery",crime:"Crime & noir",sci:"Sci-fi",fan:"Fantasy",act:"Action",adv:"Adventure",war:"War",per:"Period",psy:"Psychological",sup:"Supernatural",coa:"Coming-of-age",fam:"Family",spo:"Sports",mus:"Music",sol:"Slice of life",sat:"Satire",doc:"Documentary",anim:"Animation",
+osc:"Oscar winners",fest:"Festival winners",cult:"Cult classics",gem:"Hidden gems",true:"Based on true events",
+ind:"Indie",a24:"A24",blk:"Blockbuster",slow:"Slow cinema",date:"Date night",feel:"Feel-good",
+dpre:"Before 1960",d60:"1960s",d70:"1970s",d80:"1980s",d90:"1990s",d00:"2000s",d10:"2010s",d20:"2020s",le:"Esra's list",ld:"David's list"};
+const CG=[["Lists",["le","ld"]],["Region",["na","uk","eu","es","la","tr","kr","jp","cn","asia","sub"]],["Genre",["dra","com","rom","thr","hor","mys","crime","sci","fan","act","adv","war","per","psy","sup","coa","fam","spo","mus","sol","sat","doc","anim"]],["Recognition",["osc","fest","cult","gem","true"]],["Style",["ind","a24","blk","slow","date","feel"]],["Decade",["dpre","d60","d70","d80","d90","d00","d10","d20"]]];
+const TY=[["x","Any"],["p","Movie"],["s","Series"],["a","Anime"]];
+const COL=["#8c2a42","#d8b46a","#3d5a80","#6b4c7a","#b9774a","#2f6f6a","#c4566b","#8a9450"],CTX=["#f1eadb","#12162a","#f1eadb","#f1eadb","#12162a","#f1eadb","#f1eadb","#12162a"];
+const LV=["Popcorn rookies","Couch regulars","Blanket critics","Pyjama cinephiles","Programme curators","Film club legends"];
+const A=[["first","Opening night","Your first pick"],["anime3","Anime marathon","Three anime in a row"],["cry3","Tissues out","Three tearjerkers in a row"],["brave","Brave hearts","Horror on a Tuesday"],["chaos","Agents of chaos","A winner from Surprise us"],["streak3","On a roll","Three nights in a row"],["demo","Democracy","Both vetoes in one round"],["classic","Archaeologists","Something from before 1970"],["wl5","Watchlist slayers","Five titles off the watchlist"],["long","No rush","Picking with three hours or more"],["world","World tour","Five different countries"],["own","Own call","A title you added wins"]];
+const I={up:'<svg class="i" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>',dn:'<svg class="i" viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>',x:'<svg class="i" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>'};
+function mk(r,i){const x={i,n:r[0],y:r[1],t:r[2],m:r[3],e:r[4],mo:r[5]?r[5].split(","):[],w:r[6],g:new Set(r[7]?r[7].split(","):[]),d:r[8]},g=x.g;
+ const [cc,gn]=(G[x.n]||"|").split("|"),cs=cc?cc.split("+"):(x.t==="a"?["jp"]:[]);x.cs=cs;
+ if(gn)gn.split(",").forEach(t=>g.add(t));
+ cs.forEach(c=>{if(["kr","jp","cn","es","tr","la","uk"].includes(c))g.add(c);if(c==="us"||c==="ca")g.add("na");if(["uk","fr","de","pl","ch","ru","es","ie","at","it","se"].includes(c))g.add("eu")});
+ if(cs.length&&!cs.some(c=>["us","uk","ca","au","nz","ie","za"].includes(c)))g.add("sub");
+ if(g.has("kr")||g.has("jp")||g.has("cn"))g.add("asia");if(x.t==="a")g.add("anim");
+ if(x.y)g.add(x.y<1960?"dpre":"d"+String(Math.floor(x.y/10)*10).slice(2));
+ if(x.mo.includes("cozy")||(x.mo.includes("fun")&&!x.mo.some(m=>m==="scary"||m==="tense")))g.add("feel");return x}
+const P=D.map((r,i)=>{const x=mk(r,i);if(x.w&&!x.g.has("le"))x.g.add("ld");return x});
+const $=id=>document.getElementById(id);
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const K="bobosMN1";let S={};
+try{S=JSON.parse(localStorage.getItem(K))||{}}catch(e){S={}}
+S=Object.assign({xp:0,h:[],a:[],st:0,last:"",mw:{},ib:null,q:[],sent:[]},S);S.p=["Esra","David"];delete S.c;
+{const OM={"risa":"fun","tensión":"tense","llorar":"cry","cerebro":"brain","adrenalina":"rush","romántico":"love","miedo":"scary","épico":"epic","raro":"weird"},f=m=>OM[m]||m,mw={};
+ for(const k in S.mw)mw[f(k)]=S.mw[k];S.mw=mw;S.h.forEach(h=>h.mo=(h.mo||[]).map(f))}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const st={T:120,ty:"x",mo:new Set(),co:new Set(),wl:false,chaos:false,cg:0};
+let picks=[],backup=[],vetos=[0,0],armed=-1,rot=0,spinning=false,winner=null,respun=false;
+
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const dayDiff=(a,b)=>Math.round((new Date(b)-new Date(a))/864e5);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const buzz=p=>{try{if(!RM&&navigator.vibrate)navigator.vibrate(p)}catch(e){}};
+const pop=sel=>{const el=document.querySelector(sel);if(el&&!RM)el.classList.add("pop");buzz(8)};
+const mix=(h,a)=>{const n=parseInt(h.slice(1),16),c=[n>>16,n>>8&255,n&255].map(v=>Math.round(v+(255-v)*a));return"rgb("+c.join(",")+")"};
+const orList=a=>a.length<2?a.join(""):a.slice(0,-1).join(", ")+" or "+a[a.length-1];
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.k);toast.k=setTimeout(()=>e.classList.remove("show"),2600)}
+
+function renderLv(){const l=Math.floor(S.xp/100);$("lvL").textContent=l+1;$("lvN").textContent=LV[Math.min(l,LV.length-1)];$("lvR").style.strokeDashoffset=125.7*(1-(S.xp%100)/100);$("lvS").textContent=S.xp+" XP · "+(S.st?"🔥 "+S.st+"-night streak":"no streak yet")}
+function summary(){
+ const f={x:"Anything",p:"A movie",s:"A series",a:"Some anime"}[st.ty];
+ const m=[...st.mo].map(k=>ML[k].toLowerCase());
+ const c=CG.map(([g,ks])=>ks.filter(k=>st.co.has(k)).map(k=>g==="Genre"?CO[k].toLowerCase():CO[k])).filter(a=>a.length).map(orList);
+ return f+(m.length?" that's "+orList(m):"")+(c.length?", within "+c.join(" and "):"")+(st.wl?", from our watchlist":"")+"."}
+function renderCtl(){
+ const h=Math.floor(st.T/60),mi=st.T%60;
+ $("tmv").innerHTML=(h?h+"<small>h</small>":"")+(mi?String(mi).padStart(h?2:1,"0")+"<small>min</small>":"");
+ $("tm").value=st.T;$("tm").style.setProperty("--p",((st.T-30)/210*100)+"%");
+ $("tm").setAttribute("aria-valuetext",(h?h+" hours ":"")+(mi?mi+" minutes":""));
+ $("sum").textContent=summary();
+ $("ty").innerHTML=TY.map(([k,l])=>`<button class="chip" data-t="${k}" aria-pressed="${st.ty===k}">${l}</button>`).join("");
+ $("mo").innerHTML=MO.map(([k,l])=>`<button class="chip" data-m="${k}" aria-pressed="${st.mo.has(k)}">${l}</button>`).join("");
+ const [,ks]=CG[st.cg];
+ $("co").innerHTML=`<div class="ctabs" role="tablist">${CG.map(([g,k],i)=>{const n=k.filter(c=>st.co.has(c)).length;return`<button class="ctab" role="tab" data-g="${i}" aria-selected="${st.cg===i}">${g}${n?`<i>${n}</i>`:""}</button>`}).join("")}</div><div class="chips">${ks.map(k=>`<button class="chip" data-c="${k}" aria-pressed="${st.co.has(k)}">${CO[k]}</button>`).join("")}</div>`;
+ $("coClr").classList.toggle("hide",!st.co.size);
+ $("wl").setAttribute("aria-checked",st.wl)}
+const seen=()=>new Set(S.h.map(h=>h.n));
+function fits(x,T,useMood,strict,sn){
+ if(sn.has(x.n))return false;
+ if(st.ty!=="x"&&x.t!==st.ty)return false;
+ if(x.m>T)return false;
+ if(strict&&st.wl&&!x.w)return false;
+ if(strict&&st.co.size&&!CG.every(([,ks])=>{const s=ks.filter(k=>st.co.has(k));return!s.length||s.some(k=>x.g.has(k))}))return false;
+ if(useMood&&st.mo.size&&!x.mo.some(m=>st.mo.has(m)))return false;
+ return true}
+function score(x){let s=x.w*2+Math.random()*3.5;for(const m of x.mo){if(st.mo.has(m))s+=3;s+=S.mw[m]||0}for(const c of st.co)if(x.g.has(c))s+=2.5;return s}
+function build(){
+ const sn=seen();
+ const steps=[[1,0,1,""],[0,0,1,"Few titles matched that mood, so other moods are included."],[0,15,1,"Other moods are included, and some titles run up to 15 minutes over."],[0,30,1,"Other moods are included, and some titles run up to 30 minutes over."],[0,999,1,"Some titles run longer than the time you set."],[0,30,0,"Not enough titles in those collections, so a few from outside them are included."],[0,999,0,"A few titles from outside your collections are included, and some run long."]];
+ const r=[],used=new Set(),tier=[];
+ steps.forEach(([um,dt,strict],k)=>{const c=P.filter(x=>!used.has(x)&&fits(x,st.T+dt,um,strict,sn)).map(x=>[score(x),x]).sort((a,b)=>b[0]-a[0]);
+  for(const [,x] of c){used.add(x);r.push(x);tier.push(k)}});
+ const ti=new Map(r.map((x,i)=>[x,tier[i]]));
+ if(st.ty==="x"){const t0=r.filter(x=>ti.get(x)===0);if(t0.length>=5){const cnt={},a=[];for(const x of t0)if(a.length<5&&(cnt[x.t]=(cnt[x.t]||0)+1)<=2)a.push(x);for(const x of t0)if(a.length<5&&!a.includes(x))a.push(x);r.splice(0,r.length,...a,...r.filter(x=>!a.includes(x)))}}
+ picks=r.slice(0,5);backup=r.slice(5);vetos=[0,0];armed=-1;
+ return steps[Math.max(0,...picks.map(x=>ti.get(x)))][3]}
+function meta(x){
+ if(x.own)return"Added by you";
+ if(x.e===0)return(x.t==="a"?"Anime film, ":"Movie, ")+x.m+" min";
+ const n=Math.max(1,Math.min(x.e,Math.floor(st.T/x.m)));
+ return(x.t==="a"?"Anime, ":"Series, ")+x.e+" episodes of "+x.m+" min. About "+n+" fit tonight."}
+const tags=x=>(x.g&&x.g.has("le")?`<span class="tag acc">On Esra's list</span>`:"")+(x.g&&x.g.has("ld")?`<span class="tag acc">On David's list</span>`:"")+x.mo.map(m=>`<span class="tag">${ML[m]}</span>`).join("");
+function renderCards(){
+ $("vetos").innerHTML=S.p.map((p,i)=>`<button class="chip vt" data-v="${i}" aria-pressed="${armed===i}" ${vetos[i]?"disabled":""}>${vetos[i]?esc(p)+" used their veto":armed===i?"Pick one to veto":esc(p)+" vetoes"}</button>`).join("");
+ $("cards").className="cards"+(armed>=0?" armed":"");
+ $("cards").innerHTML=picks.map((x,i)=>`<li class="row" data-k="${i}"><span class="sw" style="background:${COL[i%8]}"></span><div><div class="rt"><h3>${esc(x.n)}</h3>${x.y?`<span class="yr">${x.y}</span>`:""}</div><p class="meta">${meta(x)}</p>${x.d?`<p class="ds">${esc(x.d)}</p>`:""}<div class="tags">${tags(x)}</div></div>${x.own?`<button class="rm" data-rm="${i}" aria-label="Remove ${esc(x.n)}">${I.x}</button>`:""}<button class="btn vbtn" data-x="${i}">Veto</button></li>`).join("");
+ $("spinB").disabled=picks.length<2}
+function roll(){
+ const m=build();$("msg").textContent=picks.length?m:"Nothing matches these filters. Try another format or clear some collections.";
+ if(!picks.length)return;
+ $("cand").classList.remove("hide");$("wheelS").classList.add("hide");renderCards();
+ $("cand").scrollIntoView({behavior:RM?"auto":"smooth",block:"start"})}
+function veto(i){
+ const who=armed;if(who<0)return;
+ $("cards").children[i].classList.add("out");
+ vetos[who]=1;armed=-1;
+ setTimeout(()=>{const old=picks[i].n,nx=picks[i].own?null:backup.shift();if(nx)picks[i]=nx;else picks.splice(i,1);renderCards();toast(S.p[who]+" vetoed "+old+".")},RM?0:300)}
+function addOwn(e){
+ e.preventDefault();const v=$("addI").value.trim();if(!v)return;
+ if(picks.length>=8){toast("The wheel holds up to 8 titles. Remove one first.");return}
+ if(picks.some(x=>x.n.toLowerCase()===v.toLowerCase())){toast(v+" is already on the wheel.");return}
+ const f=P.find(x=>x.n.toLowerCase()===v.toLowerCase());
+ picks.push(f?Object.assign({},f):{n:v,y:0,t:"m",m:0,e:0,mo:[],w:0,g:new Set,d:"",own:1,cs:[]});
+ $("addI").value="";renderCards();toast("Added "+v+".")}
+
+let AC=null;
+function au(){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume()}catch(e){AC=null}return AC}
+function beep(f,d,type,v,t0){const a=AC;if(!a)return;const o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.value=f;const t=a.currentTime+(t0||0);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(a.destination);o.start(t);o.stop(t+d+.02)}
+const tick=()=>{beep(1100,.025,"triangle",.06);buzz(5)};
+const fanfare=()=>[523,659,784,1047].forEach((f,i)=>beep(f,i===3?.6:.16,"sine",.14,i*.12));
+
+const cv=$("wh"),cx=cv.getContext("2d");
+const seg=()=>360/picks.length;
+function drawWheel(){
+ const W=cv.width,C=W/2,Ro=C-4,R=Ro-22,n=picks.length,s=2*Math.PI/n,fs=n>6?22:26,mx=n>6?15:18,ff=getComputedStyle(document.body).getPropertyValue("--serif");
+ cx.clearRect(0,0,W,W);cx.save();cx.translate(C,C);
+ const br=cx.createLinearGradient(-C,-C,C,C);br.addColorStop(0,"#fbe7b8");br.addColorStop(.45,"#d8b46a");br.addColorStop(1,"#8f6a2c");
+ cx.beginPath();cx.arc(0,0,Ro,0,2*Math.PI);cx.fillStyle=br;cx.fill();
+ cx.beginPath();cx.arc(0,0,Ro-4,0,2*Math.PI);cx.fillStyle="#1a1f38";cx.fill();
+ cx.rotate(rot*Math.PI/180);
+ for(let k=0;k<n*6;k++){const a=k*s/6;cx.save();cx.rotate(a);cx.fillStyle=k%6?"#5a6290":"#d8b46a";cx.fillRect(-1.5,-Ro+7,3,k%6?6:12);cx.restore()}
+ for(let j=0;j<n;j++){const a0=-Math.PI/2+j*s;
+  cx.beginPath();cx.moveTo(0,0);cx.arc(0,0,R,a0,a0+s);cx.closePath();const gr=cx.createRadialGradient(0,0,30,0,0,R);gr.addColorStop(0,mix(COL[j%8],.38));gr.addColorStop(.75,COL[j%8]);gr.addColorStop(1,mix(COL[j%8],-.0));cx.fillStyle=gr;cx.fill();cx.lineWidth=3;cx.strokeStyle="#1a1f38";cx.stroke();
+  cx.save();cx.rotate(a0+s/2);cx.fillStyle=CTX[j%8];cx.font="600 "+fs+"px "+ff;cx.textAlign="right";cx.textBaseline="middle";
+  let t=picks[j].n;if(t.length>mx)t=t.slice(0,mx-1)+"…";cx.fillText(t,R-24,0);cx.restore()}
+ cx.rotate(-rot*Math.PI/180);
+ cx.beginPath();cx.arc(0,0,34,0,2*Math.PI);cx.fillStyle=br;cx.fill();
+ cx.beginPath();cx.arc(0,0,22,0,2*Math.PI);cx.fillStyle="#12162a";cx.fill();
+ cx.restore()}
+const idxAt=r=>Math.floor((((360-(r%360))%360)+360)%360/seg())%picks.length;
+function spin(){
+ if(spinning||picks.length<2)return;spinning=true;au();
+ $("cand").classList.add("hide");$("wheelS").classList.remove("hide");$("res").innerHTML="";
+ drawWheel();document.querySelector(".wheelbox").classList.add("spinning");$("wheelS").scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});
+ const n=picks.length,sg=seg(),i=Math.floor(Math.random()*n),c=i*sg+sg/2+(Math.random()-.5)*sg*.7;
+ const start=rot,target=Math.ceil(start/360)*360+360*(RM?1:6)+(360-c),dur=RM?900:5200,t0=performance.now();
+ let last=idxAt(rot);
+ const ease=t=>1-Math.pow(1-t,4);
+ (function f(now){const t=Math.min(1,(now-t0)/dur);rot=start+(target-start)*ease(t);drawWheel();
+  const k=idxAt(rot);if(k!==last){last=k;tick()}
+  if(t<1)requestAnimationFrame(f);else{spinning=false;reveal(idxAt(rot))}})(t0)}
+function reveal(k){
+ winner=picks[k];fanfare();confetti();buzz([25,40,80]);document.querySelector(".wheelbox").classList.remove("spinning");
+ $("res").innerHTML=`<div class="win"><p class="lead">Tonight we're watching</p><h3>${esc(winner.n)}</h3><p class="meta">${winner.y?winner.y+", ":""}${meta(winner)}</p>${winner.d?`<p class="ds">${esc(winner.d)}</p>`:""}<div class="tags">${tags(winner)}</div><div class="actions"><button class="btn big" id="yes">Watch this</button><button class="btn sec big" id="again">Spin again</button></div><div id="coinbox"></div></div>`;
+ $("yes").onclick=commit;$("again").onclick=coin;$("yes").focus()}
+function coin(){
+ if(respun){toast("You've already flipped the coin this round.");return}
+ respun=true;const heads=Math.random()<.5;
+ $("coinbox").innerHTML=`<div class="coin flip" id="cn"></div><p id="cr" aria-live="polite">A coin decides whether you can spin again…</p>`;
+ setTimeout(()=>{$("cn").textContent=heads?"H":"T";
+  $("cr").innerHTML=heads?"<b>Heads.</b> Spinning again.":"<b>Tails.</b> This one stays.<br><button class='btn sec' id='force' style='margin-top:12px'>Spin anyway for 5 XP</button>";
+  if(heads)setTimeout(spin,700);else $("force").onclick=()=>{S.xp=Math.max(0,S.xp-5);save();renderLv();spin()}},RM?100:1250)}
+function commit(){
+ const x=winner,d=today();if(!x)return;
+ const cn=(x.cs||[])[0]||"";
+ S.h.push({n:x.n,t:x.t,y:x.y,w:x.w,mo:x.mo,d,r:0,c:st.chaos?1:0,T:st.T,v:vetos[0]&&vetos[1]?1:0,o:x.own?1:0,cn});
+ if(S.last!==d){S.st=S.last&&dayDiff(S.last,d)===1?S.st+1:1;S.last=d}
+ const g=20+(x.w?10:0);S.xp+=g;checkAch();save();renderLv();renderHist();
+ toast("Watching "+x.n+" tonight. +"+g+" XP");
+ winner=null;respun=false;st.chaos=false;$("wheelS").classList.add("hide");$("cand").classList.add("hide");$("msg").textContent="";
+ window.scrollTo({top:0,behavior:RM?"auto":"smooth"})}
+function checkAch(){
+ const h=S.h,L=h[h.length-1],l3=h.slice(-3),ok={};
+ ok.first=1;ok.anime3=l3.length===3&&l3.every(e=>e.t==="a");ok.cry3=l3.length===3&&l3.every(e=>e.mo.includes("cry"));
+ ok.brave=L.mo.includes("scary")&&new Date().getDay()===2;ok.chaos=L.c;ok.streak3=S.st>=3;ok.demo=L.v;ok.classic=L.y&&L.y<1970;ok.wl5=h.filter(e=>e.w).length>=5;ok.long=L.T>=180;
+ ok.world=new Set(h.map(e=>e.cn).filter(Boolean)).size>=5;ok.own=L.o;
+ for(const [id,n] of A)if(ok[id]&&!S.a.includes(id)){S.a.push(id);S.xp+=25;setTimeout(()=>toast("Achievement unlocked: "+n+". +25 XP"),2800)}
+ renderAch()}
+function renderAch(){$("achC").textContent=S.a.length+" of "+A.length;$("ach").innerHTML=A.map(([id,n,d])=>`<div class="${S.a.includes(id)?"on":""}"><b>${n}</b>${d}</div>`).join("")}
+function renderHist(){
+ $("hC").textContent=S.h.length||"";
+ const h=S.h.map((e,i)=>[e,i]).reverse().slice(0,15);
+ $("hist").innerHTML=h.length?h.map(([e,i])=>`<li><span><b>${esc(e.n)}</b><small>${e.d}</small></span><button class="ib" data-h="${i}" data-r="1" aria-label="We liked ${esc(e.n)}" aria-pressed="${e.r===1}">${I.up}</button><button class="ib dn" data-h="${i}" data-r="-1" aria-label="We didn't like ${esc(e.n)}" aria-pressed="${e.r===-1}">${I.dn}</button></li>`).join(""):'<li><span><small>Nothing yet. Titles you watch appear here, and rating them shapes future suggestions.</small></span></li>'}
+function rate(i,r){
+ const e=S.h[i];if(!e)return;const nr=e.r===r?0:r,dl=nr-e.r;
+ if(!e.r&&nr)S.xp+=5;
+ for(const m of e.mo)S.mw[m]=Math.max(-3,Math.min(3,(S.mw[m]||0)+dl*.6));
+ e.r=nr;save();renderHist();renderLv()}
+function chaos(){
+ const pick=a=>a[Math.floor(Math.random()*a.length)];
+ st.T=30+15*Math.floor(Math.random()*15);st.ty=pick(TY)[0];st.mo=new Set();st.co=new Set();
+ const k=1+Math.floor(Math.random()*2);while(st.mo.size<k)st.mo.add(pick(MO)[0]);
+ if(Math.random()<.5)st.co.add(pick(CG.flatMap(g=>g[1])));
+ st.wl=Math.random()<.3;st.chaos=true;renderCtl();roll();toast("Random filters applied.")}
+
+const fx=$("fx"),fc=fx.getContext("2d");let parts=[];
+function confetti(){
+ if(RM)return;fx.width=innerWidth;fx.height=innerHeight;
+ for(let i=0;i<80;i++)parts.push({x:innerWidth/2,y:innerHeight*.35,vx:(Math.random()-.5)*12,vy:-Math.random()*12-4,s:3+Math.random()*5,c:i%3?"#d8b46a":COL[i%8],r:Math.random()*6,vr:(Math.random()-.5)*.3,l:0});
+ if(parts.length<=80)requestAnimationFrame(cf)}
+function cf(){
+ fc.clearRect(0,0,fx.width,fx.height);
+ parts=parts.filter(p=>p.l++<160&&p.y<fx.height+20);
+ for(const p of parts){p.vy+=.33;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;fc.save();fc.translate(p.x,p.y);fc.rotate(p.r);fc.fillStyle=p.c;fc.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);fc.restore()}
+ if(parts.length)requestAnimationFrame(cf);else fc.clearRect(0,0,fx.width,fx.height)}
+
+$("tm").oninput=e=>{st.T=+e.target.value;renderCtl();const t=$("tmv");t.classList.remove("bump");void t.offsetWidth;if(!RM)t.classList.add("bump");buzz(4)};
+$("ty").onclick=e=>{const b=e.target.closest("[data-t]");if(b){st.ty=b.dataset.t;renderCtl();pop(`[data-t="${st.ty}"]`)}};
+$("mo").onclick=e=>{const b=e.target.closest("[data-m]");if(b){const m=b.dataset.m;st.mo.has(m)?st.mo.delete(m):st.mo.add(m);renderCtl();pop(`[data-m="${m}"]`)}};
+$("co").onclick=e=>{const t=e.target.closest("[data-g]");if(t){st.cg=+t.dataset.g;renderCtl();buzz(5);return}const b=e.target.closest("[data-c]");if(b){const c=b.dataset.c;st.co.has(c)?st.co.delete(c):st.co.add(c);renderCtl();pop(`[data-c="${c}"]`)}};
+$("coClr").onclick=()=>{st.co.clear();renderCtl();buzz(8)};
+$("wl").onclick=()=>{st.wl=!st.wl;renderCtl();buzz(10)};
+$("go").onclick=()=>{st.chaos=false;respun=false;roll()};
+$("chaos").onclick=()=>{respun=false;chaos()};
+$("reroll").onclick=()=>roll();
+$("spinB").onclick=spin;
+$("addF").onsubmit=addOwn;
+$("vetos").onclick=e=>{const b=e.target.closest("[data-v]");if(b&&!b.disabled){const v=+b.dataset.v;armed=armed===v?-1:v;renderCards()}};
+$("cards").onclick=e=>{const r=e.target.closest("[data-rm]");if(r&&armed<0){picks.splice(+r.dataset.rm,1);renderCards();return}if(armed<0)return;const c=e.target.closest(".row");if(c)veto(+c.dataset.k)};
+$("hist").onclick=e=>{const b=e.target.closest("[data-h]");if(b)rate(+b.dataset.h,+b.dataset.r)};
+const ib={by:S.p[0],editing:!S.ib,busy:false};
+const csv=l=>{const r=[];let c="",q=false;for(let i=0;i<l.length;i++){const ch=l[i];if(q){if(ch==='"'&&l[i+1]==='"'){c+='"';i++}else if(ch==='"')q=false;else c+=ch}else if(ch==='"')q=true;else if(ch===","){r.push(c);c=""}else c+=ch}r.push(c);return r};
+function parseList(t){const out=[],seen=new Set();
+ for(let l of String(t).split(/\r?\n/)){l=l.trim();if(!l)continue;
+  if(/^(date|position|name)\s*,/i.test(l)||/^letterboxd list export/i.test(l))continue;
+  if(/boxd\.it\//.test(l)){const f=csv(l);l=(f[1]||"").trim()+(/^\d{4}$/.test((f[2]||"").trim())?" ("+f[2].trim()+")":"")}
+  else l=l.replace(/^(?:[-*•·–—]+|\d{1,3}[.)-])\s*/,"").replace(/^["“”']+|["“”']+$/g,"").trim();
+  if(!l||/^https?:\/\//i.test(l))continue;l=l.slice(0,200);
+  const k=l.toLowerCase();if(seen.has(k))continue;seen.add(k);out.push(l);if(out.length>=300)break}
+ return out}
+async function ibPost(body){const r=await fetch(S.ib.u,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({},body,{key:S.ib.k}))});
+ let j;try{j=await r.json()}catch(e){throw new Error("bad response")}if(!j.ok)throw new Error(j.error||"inbox error");return j}
+const ibErr=e=>String(e&&e.message)==="bad key"?"The passcode doesn't match the one in the Google script.":"Couldn't reach the inbox. The titles are kept on this phone and will be sent when you're back online.";
+function renderIB(){
+ const setup=!S.ib||ib.editing;$("ibSetup").classList.toggle("hide",!setup);$("ibMain").classList.toggle("hide",setup);
+ if(S.ib&&setup){$("ibU").value=$("ibU").value||S.ib.u}
+ const waiting=S.q.reduce((a,b)=>a+b.titles.length,0);$("qC").textContent=waiting?waiting+" waiting":"";
+ $("ibO").innerHTML=S.p.map(p=>`<button type="button" class="chip" data-by="${p}" aria-pressed="${ib.by===p}">${p}'s list</button>`).join("");
+ const n=parseList($("ibT").value).length;$("ibN").textContent=n?n+(n===1?" title":" titles")+" ready to send to "+ib.by+"'s list.":"Each line becomes one title. Claude fills in the rest later.";
+ $("ibSend").disabled=!n||ib.busy;$("ibSend").textContent=ib.busy?"Sending…":"Send to the inbox";
+ const rows=[...S.q.flatMap(b=>b.titles.map(t=>({t,by:b.by,d:b.d,w:1}))),...S.sent];
+ $("ibL").innerHTML=rows.length?rows.slice(0,25).map(r=>`<li class="${r.w?"q":""}"><span><b>${esc(r.t)}</b><small>${r.w?"Waiting to send":"In the inbox"}, ${esc(r.by)}'s list, ${r.d}</small></span></li>`).join(""):'<li><span><small>Titles you send appear here. Once Claude processes the inbox they join the catalogue on both phones.</small></span></li>'}
+async function flush(){if(!S.ib||!S.q.length||ib.busy)return true;ib.busy=true;renderIB();$("ibM").textContent="";
+ try{while(S.q.length){const b=S.q[0];await ibPost({action:"add",by:b.by,titles:b.titles});S.q.shift();S.sent=[...b.titles.map(t=>({t,by:b.by,d:b.d})),...S.sent].slice(0,50);save()}return true}
+ catch(e){$("ibM").textContent=ibErr(e);return false}
+ finally{ib.busy=false;renderIB()}}
+$("ibSave").onclick=async()=>{const u=$("ibU").value.trim(),k=$("ibK").value;$("ibE").textContent="";
+ if(!/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(u)&&!/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\//.test(u)){$("ibE").textContent="Paste the web app URL from the Google script. It ends in /exec.";return}
+ if(!k){$("ibE").textContent="Enter the passcode you set in the Google script.";return}
+ const prev=S.ib;S.ib={u,k};$("ibSave").disabled=true;$("ibSave").textContent="Connecting…";
+ try{await ibPost({action:"ping"});save();ib.editing=false;$("ibK").value="";toast("Connected to the inbox.");buzz([10,30,10]);renderIB();flush()}
+ catch(e){S.ib=prev;$("ibE").textContent=String(e&&e.message)==="bad key"?"That passcode doesn't match the one in the Google script.":"Couldn't reach that URL. Check it's the web app URL and that access is set to Anyone."}
+ finally{$("ibSave").disabled=false;$("ibSave").textContent="Connect"}};
+$("ibRe").onclick=()=>{ib.editing=true;renderIB()};
+$("ibO").onclick=e=>{const b=e.target.closest("[data-by]");if(b){ib.by=b.dataset.by;renderIB();pop(`[data-by="${ib.by}"]`)}};
+$("ibT").oninput=renderIB;
+$("ibSend").onclick=async()=>{const titles=parseList($("ibT").value);if(!titles.length)return;
+ S.q.push({by:ib.by,titles,d:today()});save();$("ibT").value="";renderIB();
+ const ok=await flush();if(ok){toast("Sent "+titles.length+(titles.length===1?" title":" titles")+" to the inbox.");buzz([10,30,10])}};
+addEventListener("online",flush);
+renderIB();flush();
+renderCtl();renderLv();renderHist();renderAch();
+</script>
+</body>
+</html>

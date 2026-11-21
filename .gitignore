@@ -1,0 +1,10 @@
+# Secrets
+google/inbox.local.json
+
+# Personal exports (Letterboxd / AniList): used to build the catalogue, not published
+*.csv
+likes/
+lists/
+
+# Local tooling
+.claude/
